@@ -8,25 +8,25 @@
             "command": "${workspaceFolder}\\.vscode\\run.bat",
             "args": [
                 "${workspaceRoot}",
-                "UnrealDisaster"
+                "infinite-tower"
             ],
             "dependsOrder": "sequence",
             "dependsOn": ["打包"]
         },
         {
             "label": "配置",
-            "command": "chcp 65001 && \"${workspaceRoot}/tools/w3x2lni/bin/w3x2lni-lua.exe\"",
+            "command": "cmd",
             "args": [
-                ".\\tools\\配置.lua",
-                "${workspaceRoot}"
+                "/c",
+                "chcp 65001 && \"${workspaceRoot}\\tools\\w3x2lni\\bin\\w3x2lni-lua.exe\" \".\\tools\\配置.lua\" \"${workspaceRoot}\""
             ]
         },
         {
             "label": "語法檢查",
-            "command": "chcp 65001 && \"${workspaceRoot}/tools/w3x2lni/bin/w3x2lni-lua.exe\"",
+            "command": "cmd",
             "args": [
-                ".\\tools\\語法檢查.lua",
-                "${workspaceRoot}"
+                "/c",
+                "chcp 65001 && \"${workspaceRoot}/tools/w3x2lni/bin/w3x2lni-lua.exe\" \".\\tools\\語法檢查.lua\" \"${workspaceRoot}\""
             ],
             "problemMatcher": {
                 "owner": "lua",
@@ -54,7 +54,7 @@
             "args": [
                 "${workspaceRoot}",
                 "obj",
-                "UnrealDisaster"
+                "infinite-tower"
             ]
         },
         {
@@ -69,12 +69,12 @@
             "args": [
                 "${workspaceRoot}",
                 "lni",
-                "UnrealDisaster",
+                "infinite-tower"
             ]
         },
         {
             "label": "發佈(Slk)",
-            "command": "chcp 65001 && \"${workspaceRoot}/tools/w3x2lni/w2l.exe\"",
+            "command": "${workspaceFolder}\\.vscode\\w3x2lni.bat",
             "presentation": {
                 "echo": false,
                 "reveal": "always",
@@ -82,18 +82,17 @@
                 "panel": "new"
             },
             "args": [
-                "slk",
                 "${workspaceRoot}",
-                "${workspaceRoot}/UnrealDisaster.w3x"
+                "slk",
+                "infinite-tower"
             ]
         },
         {
             "label": "🔍",
-            "command": "chcp 65001 && \"${workspaceRoot}/tools/w3x2lni/bin/w3x2lni-lua.exe\" -e \"package.cpath=package.cpath..';'..[[${workspaceRoot}/tools/?.dll]]\"",
+            "command": "cmd",
             "args": [
-                ".\\tools\\語法檢查.lua",
-                "${workspaceRoot}",
-                "--watch"
+                "/c",
+                "chcp 65001 && \"${workspaceRoot}/tools/w3x2lni/bin/w3x2lni-lua.exe\" -e \"package.cpath=package.cpath..';'..[[${workspaceRoot}\\tools\\?.dll]]\" \"${workspaceRoot}\\tools\\語法檢查.lua\" \"${workspaceRoot}\" --watch"
             ],
             "isBackground": true,
             "problemMatcher": {

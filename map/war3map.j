@@ -38,10 +38,15 @@ integer array i_31
 integer array i_32
 
 //endglobals from JapiConstantLib
+//globals from YDTriggerSaveLoadSystem:
+constant boolean LIBRARY_YDTriggerSaveLoadSystem=true
+hashtable YDHT
+hashtable YDLOC
+//endglobals from YDTriggerSaveLoadSystem
 //globals from japi:
 constant boolean LIBRARY_japi=true
 hashtable japi_ht=InitHashtable()
-integer japi___key=StringHash("jass")
+integer japi__key=StringHash("jass")
 //endglobals from japi
 //globals from LocalActionLib:
 constant boolean LIBRARY_LocalActionLib=true
@@ -53,7 +58,6 @@ constant boolean LIBRARY_d3d=true
 constant hashtable d3d__ht=japi_ht
 constant integer d3d__key=StringHash("jass")
 //endglobals from d3d
-    // Generated
 trigger gg_trg_japi_constant_lib= null
 trigger gg_trg_japi= null
 trigger gg_trg_d3d= null
@@ -113,7 +117,7 @@ function sc__LOGFONT_deallocate takes integer this returns nothing
 endfunction
 
 //library Base:
-    function Base___init takes nothing returns nothing
+    function Base__init takes nothing returns nothing
         call AbilityId("exec-lua: main")
     endfunction
 
@@ -160,6 +164,13 @@ endfunction
     endfunction
 
 //library JapiConstantLib ends
+//library YDTriggerSaveLoadSystem:
+    function YDTriggerSaveLoadSystem__Init takes nothing returns nothing
+            set YDHT=InitHashtable()
+        set YDLOC=InitHashtable()
+    endfunction
+
+//library YDTriggerSaveLoadSystem ends
 //library japi:
 
 
@@ -171,15 +182,15 @@ endfunction
     endfunction
     //獲取鼠標在地圖中的x軸
      function GetMouseX takes nothing returns real
-        call SaveStr(japi_ht, japi___key, 0, "()R")
-        call UnitId(("GetMouseX")) // INLINED!!
-        return LoadReal(japi_ht, japi___key, 0)
+        call SaveStr(japi_ht, japi__key, 0, "()R")
+        call Call("GetMouseX")
+        return LoadReal(japi_ht, japi__key, 0)
     endfunction
     //獲取鼠標在地圖中的y軸
      function GetMouseY takes nothing returns real
-        call SaveStr(japi_ht, japi___key, 0, "()R")
-        call UnitId(("GetMouseY")) // INLINED!!
-        return LoadReal(japi_ht, japi___key, 0)
+        call SaveStr(japi_ht, japi__key, 0, "()R")
+        call Call("GetMouseY")
+        return LoadReal(japi_ht, japi__key, 0)
     endfunction
     
     
@@ -187,11 +198,11 @@ endfunction
     
     //==========================================================================
      function EXGetUnitAbility takes unit u,integer abilityId returns integer
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(u))
-        call SaveInteger(japi_ht, japi___key, 2, abilityId)
-        call SaveStr(japi_ht, japi___key, 0, "(II)I")
-        call UnitId(("EXGetUnitAbility")) // INLINED!!
-        return LoadInteger(japi_ht, japi___key, 0)
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(u))
+        call SaveInteger(japi_ht, japi__key, 2, abilityId)
+        call SaveStr(japi_ht, japi__key, 0, "(II)I")
+        call Call("EXGetUnitAbility")
+        return LoadInteger(japi_ht, japi__key, 0)
     endfunction
     
     // yd japi ==================================================================
@@ -199,83 +210,83 @@ endfunction
     
     ///<summary>技能屬性 [JAPI]</summary>
   function YDWEGetUnitAbilityState takes unit u,integer abilcode,integer data_type returns real
-        call SaveInteger(japi_ht, japi___key, 1, EXGetUnitAbility(u , abilcode))
-        call SaveInteger(japi_ht, japi___key, 2, data_type)
-        call SaveStr(japi_ht, japi___key, 0, "(II)R")
-        call UnitId(("EXGetAbilityState")) // INLINED!!
-		return LoadReal(japi_ht, japi___key, 0)
+        call SaveInteger(japi_ht, japi__key, 1, EXGetUnitAbility(u , abilcode))
+        call SaveInteger(japi_ht, japi__key, 2, data_type)
+        call SaveStr(japi_ht, japi__key, 0, "(II)R")
+        call Call("EXGetAbilityState")
+		return LoadReal(japi_ht, japi__key, 0)
 	endfunction
 	///<summary>技能數據 (整數) [JAPI]</summary>
   function YDWEGetUnitAbilityDataInteger takes unit u,integer abilcode,integer level,integer data_type returns integer
-        call SaveInteger(japi_ht, japi___key, 1, EXGetUnitAbility(u , abilcode))
-        call SaveInteger(japi_ht, japi___key, 2, level)
-        call SaveInteger(japi_ht, japi___key, 3, data_type)
-        call SaveStr(japi_ht, japi___key, 0, "(III)I")
-        call UnitId(("EXGetAbilityDataInteger")) // INLINED!!
-		return LoadInteger(japi_ht, japi___key, 0)
+        call SaveInteger(japi_ht, japi__key, 1, EXGetUnitAbility(u , abilcode))
+        call SaveInteger(japi_ht, japi__key, 2, level)
+        call SaveInteger(japi_ht, japi__key, 3, data_type)
+        call SaveStr(japi_ht, japi__key, 0, "(III)I")
+        call Call("EXGetAbilityDataInteger")
+		return LoadInteger(japi_ht, japi__key, 0)
 	endfunction
 	///<summary>技能數據 (實數) [JAPI]</summary>
   function YDWEGetUnitAbilityDataReal takes unit u,integer abilcode,integer level,integer data_type returns real
-        call SaveInteger(japi_ht, japi___key, 1, EXGetUnitAbility(u , abilcode))
-        call SaveInteger(japi_ht, japi___key, 2, level)
-        call SaveInteger(japi_ht, japi___key, 3, data_type)
-        call SaveStr(japi_ht, japi___key, 0, "(III)R")
-        call UnitId(("EXGetAbilityDataReal")) // INLINED!!
-		return LoadReal(japi_ht, japi___key, 0)
+        call SaveInteger(japi_ht, japi__key, 1, EXGetUnitAbility(u , abilcode))
+        call SaveInteger(japi_ht, japi__key, 2, level)
+        call SaveInteger(japi_ht, japi__key, 3, data_type)
+        call SaveStr(japi_ht, japi__key, 0, "(III)R")
+        call Call("EXGetAbilityDataReal")
+		return LoadReal(japi_ht, japi__key, 0)
     endfunction
 	///<summary>技能數據 (字符串) [JAPI]</summary>
   function YDWEGetUnitAbilityDataString takes unit u,integer abilcode,integer level,integer data_type returns string
-        call SaveInteger(japi_ht, japi___key, 1, EXGetUnitAbility(u , abilcode))
-        call SaveInteger(japi_ht, japi___key, 2, level)
-        call SaveInteger(japi_ht, japi___key, 3, data_type)
-        call SaveStr(japi_ht, japi___key, 0, "(III)S")
-        call UnitId(("EXGetAbilityDataString")) // INLINED!!
-		return LoadStr(japi_ht, japi___key, 0)
+        call SaveInteger(japi_ht, japi__key, 1, EXGetUnitAbility(u , abilcode))
+        call SaveInteger(japi_ht, japi__key, 2, level)
+        call SaveInteger(japi_ht, japi__key, 3, data_type)
+        call SaveStr(japi_ht, japi__key, 0, "(III)S")
+        call Call("EXGetAbilityDataString")
+		return LoadStr(japi_ht, japi__key, 0)
 	endfunction
 	///<summary>設置技能屬性 [JAPI]</summary>
   function YDWESetUnitAbilityState takes unit u,integer abilcode,integer data_type,real value returns nothing
-        call SaveInteger(japi_ht, japi___key, 1, EXGetUnitAbility(u , abilcode))
-        call SaveInteger(japi_ht, japi___key, 2, data_type)
-        call SaveReal(japi_ht, japi___key, 3, value)
-        call SaveStr(japi_ht, japi___key, 0, "(IIR)V")
-        call UnitId(("EXSetAbilityState")) // INLINED!!
+        call SaveInteger(japi_ht, japi__key, 1, EXGetUnitAbility(u , abilcode))
+        call SaveInteger(japi_ht, japi__key, 2, data_type)
+        call SaveReal(japi_ht, japi__key, 3, value)
+        call SaveStr(japi_ht, japi__key, 0, "(IIR)V")
+        call Call("EXSetAbilityState")
     endfunction
 	///<summary>設置技能數據 (整數) [JAPI]</summary>
   function YDWESetUnitAbilityDataInteger takes unit u,integer abilcode,integer level,integer data_type,integer value returns nothing
-        call SaveInteger(japi_ht, japi___key, 1, EXGetUnitAbility(u , abilcode))
-        call SaveInteger(japi_ht, japi___key, 2, level)
-        call SaveInteger(japi_ht, japi___key, 3, data_type)
-        call SaveInteger(japi_ht, japi___key, 4, value)
-        call SaveStr(japi_ht, japi___key, 0, "(IIII)V")
-        call UnitId(("EXSetAbilityDataInteger")) // INLINED!!
+        call SaveInteger(japi_ht, japi__key, 1, EXGetUnitAbility(u , abilcode))
+        call SaveInteger(japi_ht, japi__key, 2, level)
+        call SaveInteger(japi_ht, japi__key, 3, data_type)
+        call SaveInteger(japi_ht, japi__key, 4, value)
+        call SaveStr(japi_ht, japi__key, 0, "(IIII)V")
+        call Call("EXSetAbilityDataInteger")
     endfunction
 	///<summary>設置技能數據 (實數) [JAPI]</summary>
   function YDWESetUnitAbilityDataReal takes unit u,integer abilcode,integer level,integer data_type,real value returns nothing
-        call SaveInteger(japi_ht, japi___key, 1, EXGetUnitAbility(u , abilcode))
-        call SaveInteger(japi_ht, japi___key, 2, level)
-        call SaveInteger(japi_ht, japi___key, 3, data_type)
-        call SaveReal(japi_ht, japi___key, 4, value)
-        call SaveStr(japi_ht, japi___key, 0, "(IIIR)V")
-        call UnitId(("EXSetAbilityDataReal")) // INLINED!!
+        call SaveInteger(japi_ht, japi__key, 1, EXGetUnitAbility(u , abilcode))
+        call SaveInteger(japi_ht, japi__key, 2, level)
+        call SaveInteger(japi_ht, japi__key, 3, data_type)
+        call SaveReal(japi_ht, japi__key, 4, value)
+        call SaveStr(japi_ht, japi__key, 0, "(IIIR)V")
+        call Call("EXSetAbilityDataReal")
     endfunction
 	///<summary>設置技能數據 (字符串) [JAPI]</summary>
   function YDWESetUnitAbilityDataString takes unit u,integer abilcode,integer level,integer data_type,string value returns nothing
-        call SaveInteger(japi_ht, japi___key, 1, EXGetUnitAbility(u , abilcode))
-        call SaveInteger(japi_ht, japi___key, 2, level)
-        call SaveInteger(japi_ht, japi___key, 3, data_type)
-        call SaveStr(japi_ht, japi___key, 4, value)
-        call SaveStr(japi_ht, japi___key, 0, "(IIIS)V")
-        call UnitId(("EXSetAbilityDataString")) // INLINED!!
+        call SaveInteger(japi_ht, japi__key, 1, EXGetUnitAbility(u , abilcode))
+        call SaveInteger(japi_ht, japi__key, 2, level)
+        call SaveInteger(japi_ht, japi__key, 3, data_type)
+        call SaveStr(japi_ht, japi__key, 4, value)
+        call SaveStr(japi_ht, japi__key, 0, "(IIIS)V")
+        call Call("EXSetAbilityDataString")
     endfunction
 	
     
     //設置技能變身數據A
      function EXSetAbilityAEmeDataA takes integer ability_handle,integer value returns boolean
-        call SaveInteger(japi_ht, japi___key, 1, ability_handle)
-        call SaveInteger(japi_ht, japi___key, 2, value)
-        call SaveStr(japi_ht, japi___key, 0, "(II)B")
-        call UnitId(("EXSetAbilityAEmeDataA")) // INLINED!!
-        return LoadBoolean(japi_ht, japi___key, 0)
+        call SaveInteger(japi_ht, japi__key, 1, ability_handle)
+        call SaveInteger(japi_ht, japi__key, 2, value)
+        call SaveStr(japi_ht, japi__key, 0, "(II)B")
+        call Call("EXSetAbilityAEmeDataA")
+        return LoadBoolean(japi_ht, japi__key, 0)
     endfunction
     
     //單位變身
@@ -293,113 +304,113 @@ endfunction
     
     //暫停單位
      function EXPauseUnit takes unit unit_handle,boolean flag returns nothing
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(unit_handle))
-        call SaveBoolean(japi_ht, japi___key, 2, flag)
-        call SaveStr(japi_ht, japi___key, 0, "(IB)V")
-        call UnitId(("EXPauseUnit")) // INLINED!!
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(unit_handle))
+        call SaveBoolean(japi_ht, japi__key, 2, flag)
+        call SaveStr(japi_ht, japi__key, 0, "(IB)V")
+        call Call("EXPauseUnit")
     endfunction
     
     //獲取單位字符串
      function EXGetUnitString takes integer unitcode,integer Type returns string
-        call SaveInteger(japi_ht, japi___key, 1, unitcode)
-        call SaveInteger(japi_ht, japi___key, 2, Type)
-        call SaveStr(japi_ht, japi___key, 0, "(II)S")
-        call UnitId(("EXGetUnitString")) // INLINED!!
-        return LoadStr(japi_ht, japi___key, 0)
+        call SaveInteger(japi_ht, japi__key, 1, unitcode)
+        call SaveInteger(japi_ht, japi__key, 2, Type)
+        call SaveStr(japi_ht, japi__key, 0, "(II)S")
+        call Call("EXGetUnitString")
+        return LoadStr(japi_ht, japi__key, 0)
     endfunction
     
        //設置單位字符串
      function EXSetUnitString takes integer unitcode,integer Type,string value returns boolean
-        call SaveInteger(japi_ht, japi___key, 1, unitcode)
-        call SaveInteger(japi_ht, japi___key, 2, Type)
-        call SaveStr(japi_ht, japi___key, 3, value)
-        call SaveStr(japi_ht, japi___key, 0, "(IIS)B")
-        call UnitId(("EXSetUnitString")) // INLINED!!
-        return LoadBoolean(japi_ht, japi___key, 0)
+        call SaveInteger(japi_ht, japi__key, 1, unitcode)
+        call SaveInteger(japi_ht, japi__key, 2, Type)
+        call SaveStr(japi_ht, japi__key, 3, value)
+        call SaveStr(japi_ht, japi__key, 0, "(IIS)B")
+        call Call("EXSetUnitString")
+        return LoadBoolean(japi_ht, japi__key, 0)
     endfunction
     
     //獲取單位實數
      function EXGetUnitReal takes integer unitcode,integer Type returns real
-        call SaveInteger(japi_ht, japi___key, 1, unitcode)
-        call SaveInteger(japi_ht, japi___key, 2, Type)
-        call SaveStr(japi_ht, japi___key, 0, "(II)R")
-        call UnitId(("EXGetUnitReal")) // INLINED!!
-        return LoadReal(japi_ht, japi___key, 0)
+        call SaveInteger(japi_ht, japi__key, 1, unitcode)
+        call SaveInteger(japi_ht, japi__key, 2, Type)
+        call SaveStr(japi_ht, japi__key, 0, "(II)R")
+        call Call("EXGetUnitReal")
+        return LoadReal(japi_ht, japi__key, 0)
     endfunction
     
     //設置單位實數
      function EXSetUnitReal takes integer unitcode,integer Type,real value returns boolean
-        call SaveInteger(japi_ht, japi___key, 1, unitcode)
-        call SaveInteger(japi_ht, japi___key, 2, Type)
-        call SaveReal(japi_ht, japi___key, 3, value)
-        call SaveStr(japi_ht, japi___key, 0, "(IIR)B")
-        call UnitId(("EXSetUnitReal")) // INLINED!!
-        return LoadBoolean(japi_ht, japi___key, 0)
+        call SaveInteger(japi_ht, japi__key, 1, unitcode)
+        call SaveInteger(japi_ht, japi__key, 2, Type)
+        call SaveReal(japi_ht, japi__key, 3, value)
+        call SaveStr(japi_ht, japi__key, 0, "(IIR)B")
+        call Call("EXSetUnitReal")
+        return LoadBoolean(japi_ht, japi__key, 0)
     endfunction
     
     
     //獲取單位整數
      function EXGetUnitInteger takes integer unitcode,integer Type returns integer
-        call SaveInteger(japi_ht, japi___key, 1, unitcode)
-        call SaveInteger(japi_ht, japi___key, 2, Type)
-        call SaveStr(japi_ht, japi___key, 0, "(II)I")
-        call UnitId(("EXGetUnitInteger")) // INLINED!!
-        return LoadInteger(japi_ht, japi___key, 0)
+        call SaveInteger(japi_ht, japi__key, 1, unitcode)
+        call SaveInteger(japi_ht, japi__key, 2, Type)
+        call SaveStr(japi_ht, japi__key, 0, "(II)I")
+        call Call("EXGetUnitInteger")
+        return LoadInteger(japi_ht, japi__key, 0)
     endfunction
     
     //設置單位整數
      function EXSetUnitInteger takes integer unitcode,integer Type,integer value returns boolean
-        call SaveInteger(japi_ht, japi___key, 1, unitcode)
-        call SaveInteger(japi_ht, japi___key, 2, Type)
-        call SaveInteger(japi_ht, japi___key, 3, value)
-        call SaveStr(japi_ht, japi___key, 0, "(III)B")
-        call UnitId(("EXSetUnitInteger")) // INLINED!!
-        return LoadBoolean(japi_ht, japi___key, 0)
+        call SaveInteger(japi_ht, japi__key, 1, unitcode)
+        call SaveInteger(japi_ht, japi__key, 2, Type)
+        call SaveInteger(japi_ht, japi__key, 3, value)
+        call SaveStr(japi_ht, japi__key, 0, "(III)B")
+        call Call("EXSetUnitInteger")
+        return LoadBoolean(japi_ht, japi__key, 0)
     endfunction
     
         //獲取單位數組字符串
      function EXGetUnitArrayString takes integer unitcode,integer Type,integer index returns string
-        call SaveInteger(japi_ht, japi___key, 1, unitcode)
-        call SaveInteger(japi_ht, japi___key, 2, Type)
-        call SaveInteger(japi_ht, japi___key, 3, index)
-        call SaveStr(japi_ht, japi___key, 0, "(III)S")
-        call UnitId(("EXGetUnitArrayString")) // INLINED!!
-        return LoadStr(japi_ht, japi___key, 0)
+        call SaveInteger(japi_ht, japi__key, 1, unitcode)
+        call SaveInteger(japi_ht, japi__key, 2, Type)
+        call SaveInteger(japi_ht, japi__key, 3, index)
+        call SaveStr(japi_ht, japi__key, 0, "(III)S")
+        call Call("EXGetUnitArrayString")
+        return LoadStr(japi_ht, japi__key, 0)
     endfunction
     
     //設置單位數組字符串
      function EXSetUnitArrayString takes integer unitcode,integer Type,integer index,string value returns boolean
-        call SaveInteger(japi_ht, japi___key, 1, unitcode)
-        call SaveInteger(japi_ht, japi___key, 2, Type)
-        call SaveInteger(japi_ht, japi___key, 3, index)
-        call SaveStr(japi_ht, japi___key, 4, value)
-        call SaveStr(japi_ht, japi___key, 0, "(IIIS)B")
-        call UnitId(("EXSetUnitArrayString")) // INLINED!!
-        return LoadBoolean(japi_ht, japi___key, 0)
+        call SaveInteger(japi_ht, japi__key, 1, unitcode)
+        call SaveInteger(japi_ht, japi__key, 2, Type)
+        call SaveInteger(japi_ht, japi__key, 3, index)
+        call SaveStr(japi_ht, japi__key, 4, value)
+        call SaveStr(japi_ht, japi__key, 0, "(IIIS)B")
+        call Call("EXSetUnitArrayString")
+        return LoadBoolean(japi_ht, japi__key, 0)
     endfunction
     //設置單位面向角度(立即轉向)
      function EXSetUnitFacing takes unit unit_handle,real angle returns nothing
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(unit_handle))
-        call SaveReal(japi_ht, japi___key, 2, angle)
-        call SaveStr(japi_ht, japi___key, 0, "(IR)V")
-        call UnitId(("EXSetUnitFacing")) // INLINED!!
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(unit_handle))
+        call SaveReal(japi_ht, japi__key, 2, angle)
+        call SaveStr(japi_ht, japi__key, 0, "(IR)V")
+        call Call("EXSetUnitFacing")
     endfunction
     
     //設置單位碰撞類型
      function EXSetUnitCollisionType takes boolean enable,unit unit_handle,integer Type returns nothing
-        call SaveBoolean(japi_ht, japi___key, 1, enable)
-        call SaveInteger(japi_ht, japi___key, 2, GetHandleId(unit_handle))
-        call SaveInteger(japi_ht, japi___key, 3, Type)
-        call SaveStr(japi_ht, japi___key, 0, "(BII)V")
-        call UnitId(("EXSetUnitCollisionType")) // INLINED!!
+        call SaveBoolean(japi_ht, japi__key, 1, enable)
+        call SaveInteger(japi_ht, japi__key, 2, GetHandleId(unit_handle))
+        call SaveInteger(japi_ht, japi__key, 3, Type)
+        call SaveStr(japi_ht, japi__key, 0, "(BII)V")
+        call Call("EXSetUnitCollisionType")
     endfunction
     
     //設置單位移動類型
      function EXSetUnitMoveType takes unit unit_handle,integer Type returns nothing
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(unit_handle))
-        call SaveInteger(japi_ht, japi___key, 2, Type)
-        call SaveStr(japi_ht, japi___key, 0, "(II)V")
-        call UnitId(("EXSetUnitMoveType")) // INLINED!!
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(unit_handle))
+        call SaveInteger(japi_ht, japi__key, 2, Type)
+        call SaveStr(japi_ht, japi__key, 0, "(II)V")
+        call Call("EXSetUnitMoveType")
     endfunction
     
     //單位添加眩暈
@@ -433,31 +444,31 @@ endfunction
     
     //判斷是否是物理傷害
      function YDWEIsEventPhysicalDamage takes nothing returns boolean
-		return 0 != (GetUnitGoldCost((1))) // INLINED!!
+		return 0 != EXGetEventDamageData(1)
 	endfunction
     //判斷是否是攻擊傷害
   function YDWEIsEventAttackDamage takes nothing returns boolean
-		return 0 != (GetUnitGoldCost((2))) // INLINED!!
+		return 0 != EXGetEventDamageData(2)
 	endfunction
 	
     //判斷是否是範圍傷害
   function YDWEIsEventRangedDamage takes nothing returns boolean
-		return 0 != (GetUnitGoldCost((3))) // INLINED!!
+		return 0 != EXGetEventDamageData(3)
 	endfunction
 	
     //判斷傷害類型
   function YDWEIsEventDamageType takes damagetype damageType returns boolean
-		return damageType == ConvertDamageType((GetUnitGoldCost((4)))) // INLINED!!
+		return damageType == ConvertDamageType(EXGetEventDamageData(4))
 	endfunction
     
     //判斷武器類型
   function YDWEIsEventWeaponType takes weapontype weaponType returns boolean
-		return weaponType == ConvertWeaponType((GetUnitGoldCost((5)))) // INLINED!!
+		return weaponType == ConvertWeaponType(EXGetEventDamageData(5))
 	endfunction
 	
     //判斷攻擊類型
   function YDWEIsEventAttackType takes attacktype attackType returns boolean
-		return attackType == ConvertAttackType((GetUnitGoldCost((6)))) // INLINED!!
+		return attackType == ConvertAttackType(EXGetEventDamageData(6))
 	endfunction
 	//設置傷害
   function YDWESetEventDamage takes real amount returns boolean
@@ -468,170 +479,170 @@ endfunction
     
     ///<summary>設置物品數據 (字符串) [JAPI]</summary>
      function YDWESetItemDataString takes integer ItemTypeId,integer Type,string Value returns nothing
-        call SaveStr(japi_ht, japi___key, 0, "(IIS)V")
-        call SaveInteger(japi_ht, japi___key, 1, ItemTypeId)
-        call SaveInteger(japi_ht, japi___key, 2, Type)
-        call SaveStr(japi_ht, japi___key, 3, Value)
-        call UnitId(("EXSetItemDataString")) // INLINED!!
+        call SaveStr(japi_ht, japi__key, 0, "(IIS)V")
+        call SaveInteger(japi_ht, japi__key, 1, ItemTypeId)
+        call SaveInteger(japi_ht, japi__key, 2, Type)
+        call SaveStr(japi_ht, japi__key, 3, Value)
+        call Call("EXSetItemDataString")
     endfunction
     ///<summary>獲取物品數據 (字符串) [JAPI]</summary>
      function YDWEGetItemDataString takes integer ItemTypeId,integer Type returns string
-        call SaveStr(japi_ht, japi___key, 0, "(II)S")
-        call SaveInteger(japi_ht, japi___key, 1, ItemTypeId)
-        call SaveInteger(japi_ht, japi___key, 2, Type)
-        call UnitId(("EXGetItemDataString")) // INLINED!!
-        return LoadStr(japi_ht, japi___key, 0)
+        call SaveStr(japi_ht, japi__key, 0, "(II)S")
+        call SaveInteger(japi_ht, japi__key, 1, ItemTypeId)
+        call SaveInteger(japi_ht, japi__key, 2, Type)
+        call Call("EXGetItemDataString")
+        return LoadStr(japi_ht, japi__key, 0)
     endfunction
     
     //特效--------------------------------------------------------
     
     ///<summary>設置特效坐標 [JAPI]</summary>
      function EXSetEffectXY takes effect Handle,real x,real y returns nothing
-        call SaveStr(japi_ht, japi___key, 0, "(IRR)V")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call SaveReal(japi_ht, japi___key, 2, x)
-        call SaveReal(japi_ht, japi___key, 3, y)
-        call UnitId(("EXSetEffectXY")) // INLINED!!
+        call SaveStr(japi_ht, japi__key, 0, "(IRR)V")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call SaveReal(japi_ht, japi__key, 2, x)
+        call SaveReal(japi_ht, japi__key, 3, y)
+        call Call("EXSetEffectXY")
     endfunction
     
     ///<summary>設置特效Z軸 [JAPI]</summary>
      function EXSetEffectZ takes effect Handle,real z returns nothing
-        call SaveStr(japi_ht, japi___key, 0, "(IRR)V")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call SaveReal(japi_ht, japi___key, 2, z)
-		call UnitId(("EXSetEffectZ")) // INLINED!!
+        call SaveStr(japi_ht, japi__key, 0, "(IRR)V")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call SaveReal(japi_ht, japi__key, 2, z)
+		call Call("EXSetEffectZ")
 	endfunction
     
     ///<summary>獲取特效X軸 [JAPI]</summary>
      function EXGetEffectX takes effect Handle returns real
-        call SaveStr(japi_ht, japi___key, 0, "(I)R")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call UnitId(("EXGetEffectX")) // INLINED!!
-        return LoadReal(japi_ht, japi___key, 0)
+        call SaveStr(japi_ht, japi__key, 0, "(I)R")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call Call("EXGetEffectX")
+        return LoadReal(japi_ht, japi__key, 0)
 	endfunction
     
     ///<summary>獲取特效Y軸 [JAPI]</summary>
   function EXGetEffectY takes effect Handle returns real
-        call SaveStr(japi_ht, japi___key, 0, "(I)R")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call UnitId(("EXGetEffectY")) // INLINED!!
-        return LoadReal(japi_ht, japi___key, 0)
+        call SaveStr(japi_ht, japi__key, 0, "(I)R")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call Call("EXGetEffectY")
+        return LoadReal(japi_ht, japi__key, 0)
 	endfunction
     
     ///<summary>獲取特效Z軸 [JAPI]</summary>
   function EXGetEffectZ takes effect Handle returns real
-        call SaveStr(japi_ht, japi___key, 0, "(I)R")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call UnitId(("EXGetEffectZ")) // INLINED!!
-		return LoadReal(japi_ht, japi___key, 0)
+        call SaveStr(japi_ht, japi__key, 0, "(I)R")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call Call("EXGetEffectZ")
+		return LoadReal(japi_ht, japi__key, 0)
 	endfunction
     
     ///<summary>設置特效尺寸 [JAPI]</summary>
   function EXSetEffectSize takes effect Handle,real size returns nothing
-		call SaveStr(japi_ht, japi___key, 0, "(IR)V")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call SaveReal(japi_ht, japi___key, 2, size)
-        call UnitId(("EXSetEffectSize")) // INLINED!!
+		call SaveStr(japi_ht, japi__key, 0, "(IR)V")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call SaveReal(japi_ht, japi__key, 2, size)
+        call Call("EXSetEffectSize")
 	endfunction
     
     ///<summary>獲取特效尺寸 [JAPI]</summary>
   function EXGetEffectSize takes effect Handle returns real
-        call SaveStr(japi_ht, japi___key, 0, "(I)R")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call UnitId(("EXGetEffectSize")) // INLINED!!
-		return LoadReal(japi_ht, japi___key, 0)
+        call SaveStr(japi_ht, japi__key, 0, "(I)R")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call Call("EXGetEffectSize")
+		return LoadReal(japi_ht, japi__key, 0)
 	endfunction
     
     ///<summary>設置特效X旋轉軸 [JAPI]</summary>
   function EXEffectMatRotateX takes effect Handle,real x returns nothing
-        call SaveStr(japi_ht, japi___key, 0, "(IR)V")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call SaveReal(japi_ht, japi___key, 2, x)
-        call UnitId(("EXEffectMatRotateX")) // INLINED!!
+        call SaveStr(japi_ht, japi__key, 0, "(IR)V")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call SaveReal(japi_ht, japi__key, 2, x)
+        call Call("EXEffectMatRotateX")
 	endfunction
     
     ///<summary>設置特效Y旋轉軸 [JAPI]</summary>
   function EXEffectMatRotateY takes effect Handle,real y returns nothing
-        call SaveStr(japi_ht, japi___key, 0, "(IR)V")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call SaveReal(japi_ht, japi___key, 2, y)
-        call UnitId(("EXEffectMatRotateY")) // INLINED!!
+        call SaveStr(japi_ht, japi__key, 0, "(IR)V")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call SaveReal(japi_ht, japi__key, 2, y)
+        call Call("EXEffectMatRotateY")
 	endfunction
     
     ///<summary>設置特效Z旋轉軸 [JAPI]</summary>
   function EXEffectMatRotateZ takes effect Handle,real z returns nothing
-        call SaveStr(japi_ht, japi___key, 0, "(IR)V")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call SaveReal(japi_ht, japi___key, 2, z)
-        call UnitId(("EXEffectMatRotateZ")) // INLINED!!
+        call SaveStr(japi_ht, japi__key, 0, "(IR)V")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call SaveReal(japi_ht, japi__key, 2, z)
+        call Call("EXEffectMatRotateZ")
 	endfunction
     
     ///<summary>設置特效比例 [JAPI]</summary>
   function EXEffectMatScale takes effect Handle,real x,real y,real z returns nothing
-        call SaveStr(japi_ht, japi___key, 0, "(IRRR)V")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call SaveReal(japi_ht, japi___key, 2, x)
-        call SaveReal(japi_ht, japi___key, 3, y)
-        call SaveReal(japi_ht, japi___key, 4, z)
-        call UnitId(("EXEffectMatScale")) // INLINED!!
+        call SaveStr(japi_ht, japi__key, 0, "(IRRR)V")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call SaveReal(japi_ht, japi__key, 2, x)
+        call SaveReal(japi_ht, japi__key, 3, y)
+        call SaveReal(japi_ht, japi__key, 4, z)
+        call Call("EXEffectMatScale")
 	endfunction
     
     ///<summary>設置特效重置 [JAPI]</summary>
   function EXEffectMatReset takes effect Handle returns nothing
-        call SaveStr(japi_ht, japi___key, 0, "(I)V")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call UnitId(("EXEffectMatReset")) // INLINED!!
+        call SaveStr(japi_ht, japi__key, 0, "(I)V")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call Call("EXEffectMatReset")
 	endfunction
     
     ///<summary>設置特效速率 [JAPI]</summary>
   function EXSetEffectSpeed takes effect Handle,real speed returns nothing
-        call SaveStr(japi_ht, japi___key, 0, "(IR)V")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call SaveReal(japi_ht, japi___key, 2, speed)
-        call UnitId(("EXSetEffectSpeed")) // INLINED!!
+        call SaveStr(japi_ht, japi__key, 0, "(IR)V")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call SaveReal(japi_ht, japi__key, 2, speed)
+        call Call("EXSetEffectSpeed")
 	endfunction
     
     ///<summary>設置可追蹤物坐標 [JAPI]</summary>
      function EXSetTrackableXY takes trackable Handle,real x,real y returns nothing
-        call SaveStr(japi_ht, japi___key, 0, "(IRR)V")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call SaveReal(japi_ht, japi___key, 2, x)
-        call SaveReal(japi_ht, japi___key, 3, y)
-        call UnitId(("EXSetEffectXY")) // INLINED!!
+        call SaveStr(japi_ht, japi__key, 0, "(IRR)V")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call SaveReal(japi_ht, japi__key, 2, x)
+        call SaveReal(japi_ht, japi__key, 3, y)
+        call Call("EXSetEffectXY")
     endfunction
     
     
     ///<summary>獲取可追蹤物X軸 [JAPI]</summary>
      function EXGetTrackableX takes trackable Handle returns real
-        call SaveStr(japi_ht, japi___key, 0, "(I)R")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call UnitId(("EXGetEffectX")) // INLINED!!
-        return LoadReal(japi_ht, japi___key, 0)
+        call SaveStr(japi_ht, japi__key, 0, "(I)R")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call Call("EXGetEffectX")
+        return LoadReal(japi_ht, japi__key, 0)
 	endfunction
     
     ///<summary>獲取可追蹤物Y軸 [JAPI]</summary>
   function EXGetTrackableY takes trackable Handle returns real
-        call SaveStr(japi_ht, japi___key, 0, "(I)R")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(Handle))
-        call UnitId(("EXGetEffectY")) // INLINED!!
-        return LoadReal(japi_ht, japi___key, 0)
+        call SaveStr(japi_ht, japi__key, 0, "(I)R")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(Handle))
+        call Call("EXGetEffectY")
+        return LoadReal(japi_ht, japi__key, 0)
 	endfunction
     
     
     
      function EXExecuteScript takes string str returns string
-        call SaveStr(japi_ht, japi___key, 0, "(S)S")
-        call SaveStr(japi_ht, japi___key, 1, str)
-        call UnitId(("EXExecuteScript")) // INLINED!!
-        return LoadStr(japi_ht, japi___key, 0)
+        call SaveStr(japi_ht, japi__key, 0, "(S)S")
+        call SaveStr(japi_ht, japi__key, 1, str)
+        call Call("EXExecuteScript")
+        return LoadStr(japi_ht, japi__key, 0)
     endfunction
     //-----------------模擬聊天----------------------------
      function EXDisplayChat takes player p,integer chat_recipient,string message returns nothing
-        call SaveStr(japi_ht, japi___key, 0, "(IIS)V")
-        call SaveInteger(japi_ht, japi___key, 1, GetHandleId(p))
-        call SaveInteger(japi_ht, japi___key, 2, chat_recipient)
-        call SaveStr(japi_ht, japi___key, 3, message)
-        call UnitId(("EXDisplayChat")) // INLINED!!
+        call SaveStr(japi_ht, japi__key, 0, "(IIS)V")
+        call SaveInteger(japi_ht, japi__key, 1, GetHandleId(p))
+        call SaveInteger(japi_ht, japi__key, 2, chat_recipient)
+        call SaveStr(japi_ht, japi__key, 3, message)
+        call Call("EXDisplayChat")
     endfunction
   function YDWEDisplayChat takes player p,integer chat_recipient,string message returns nothing
 		call EXDisplayChat(p , chat_recipient , message)
@@ -641,38 +652,38 @@ endfunction
     
     //獲取地圖名字
      function GetMapName takes nothing returns string
-        call SaveStr(japi_ht, japi___key, 0, "()S")
-        call UnitId(("GetMapName")) // INLINED!!
-        return LoadStr(japi_ht, japi___key, 0)
+        call SaveStr(japi_ht, japi__key, 0, "()S")
+        call Call("GetMapName")
+        return LoadStr(japi_ht, japi__key, 0)
     endfunction
     
     //獲取魔獸版本
      function GetGameVersion takes nothing returns integer
-        call SaveStr(japi_ht, japi___key, 0, "()I")
-        call UnitId(("GetGameVersion")) // INLINED!!
-        return LoadInteger(japi_ht, japi___key, 0)
+        call SaveStr(japi_ht, japi__key, 0, "()I")
+        call Call("GetGameVersion")
+        return LoadInteger(japi_ht, japi__key, 0)
     endfunction
     
     //獲取插件版本
      function GetPluginVersion takes nothing returns string
-        call SaveStr(japi_ht, japi___key, 0, "()S")
-        call UnitId(("GetPluginVersion")) // INLINED!!
-        return LoadStr(japi_ht, japi___key, 0)
+        call SaveStr(japi_ht, japi__key, 0, "()S")
+        call Call("GetPluginVersion")
+        return LoadStr(japi_ht, japi__key, 0)
     endfunction
     
      function GetFuncAddr takes code f returns integer
         call SetHeroLevels(f)
-        return LoadInteger(japi_ht, japi___key, 0)
+        return LoadInteger(japi_ht, japi__key, 0)
     endfunction
      function japiDoNothing takes nothing returns nothing
         
     endfunction
     
      function func_bind_trigger_name takes code functions,string name returns nothing
-        call SaveStr(japi_ht, japi___key, 0, "(IS)V")
-        call SaveInteger(japi_ht, japi___key, 1, GetFuncAddr(functions))
-        call SaveStr(japi_ht, japi___key, 2, name)
-        call UnitId(("func_bind_trigger_name")) // INLINED!!
+        call SaveStr(japi_ht, japi__key, 0, "(IS)V")
+        call SaveInteger(japi_ht, japi__key, 1, GetFuncAddr(functions))
+        call SaveStr(japi_ht, japi__key, 2, name)
+        call Call("func_bind_trigger_name")
     endfunction
     
      function open_code_run_logs takes boolean open returns nothing
@@ -727,9 +738,9 @@ endfunction
         set l=l + "ss=nil  return '' "
         set l=l + "end)() or '' "
         call EXExecuteScript(l)
-        call SaveStr(japi_ht, japi___key, 0, "(B)V")
-        call SaveBoolean(japi_ht, japi___key, 1, open)
-        call UnitId(("open_code_run_logs")) // INLINED!!
+        call SaveStr(japi_ht, japi__key, 0, "(B)V")
+        call SaveBoolean(japi_ht, japi__key, 1, open)
+        call Call("open_code_run_logs")
     endfunction
     
     
@@ -737,10 +748,10 @@ endfunction
      function initializePlugin takes nothing returns integer
         call ExecuteFunc("japiDoNothing")
         call StartCampaignAI(Player(PLAYER_NEUTRAL_AGGRESSIVE), "callback")
-        call UnitId((I2S(GetHandleId(japi_ht)))) // INLINED!!
-        call SaveStr(japi_ht, japi___key, 0, "(I)V")
-        call SaveInteger(japi_ht, japi___key, 1, GetFuncAddr(function japiDoNothing))
-        call UnitId(("SaveFunc")) // INLINED!!
+        call Call(I2S(GetHandleId(japi_ht)))
+        call SaveStr(japi_ht, japi__key, 0, "(I)V")
+        call SaveInteger(japi_ht, japi__key, 1, GetFuncAddr(function japiDoNothing))
+        call Call("SaveFunc")
         call ExecuteFunc("japiDoNothing")
         return 0
     endfunction
@@ -756,7 +767,7 @@ endfunction
         call SaveStr(LocalActionLib__ht, LocalActionLib__key, 0, "(II)V")
         call SaveInteger(LocalActionLib__ht, LocalActionLib__key, 1, order)
         call SaveInteger(LocalActionLib__ht, LocalActionLib__key, 2, flags)
-        call UnitId(("LocalOrder")) // INLINED!!
+        call LocalActionLib__Call("LocalOrder")
     endfunction
     
     //本地發布坐標命令
@@ -766,7 +777,7 @@ endfunction
         call SaveReal(LocalActionLib__ht, LocalActionLib__key, 2, x)
         call SaveReal(LocalActionLib__ht, LocalActionLib__key, 3, y)
         call SaveInteger(LocalActionLib__ht, LocalActionLib__key, 4, flags)
-        call UnitId(("LocalPointOrder")) // INLINED!!
+        call LocalActionLib__Call("LocalPointOrder")
     endfunction
     
     //本地發布目標命令
@@ -775,7 +786,7 @@ endfunction
         call SaveInteger(LocalActionLib__ht, LocalActionLib__key, 1, order)
         call SaveWidgetHandle(LocalActionLib__ht, LocalActionLib__key, 2, object)
         call SaveInteger(LocalActionLib__ht, LocalActionLib__key, 3, flags)
-        call UnitId(("LocalTargetOrder")) // INLINED!!
+        call LocalActionLib__Call("LocalTargetOrder")
     endfunction
     
     //獲取玩家當前選擇的單位
@@ -783,7 +794,7 @@ endfunction
         call SaveStr(LocalActionLib__ht, LocalActionLib__key, 0, "(I)Hunit;")
         call RemoveSavedHandle(LocalActionLib__ht, LocalActionLib__key, 0)
         call SaveInteger(LocalActionLib__ht, LocalActionLib__key, 1, GetHandleId(p))
-        call UnitId(("GetPlayerSelectedUnit")) // INLINED!!
+        call LocalActionLib__Call("GetPlayerSelectedUnit")
         return LoadUnitHandle(LocalActionLib__ht, LocalActionLib__key, 0)
     endfunction
     
@@ -791,7 +802,7 @@ endfunction
     function GetTargetUnit takes nothing returns unit
         call SaveStr(LocalActionLib__ht, LocalActionLib__key, 0, "(V)Hunit;")
         call RemoveSavedHandle(LocalActionLib__ht, LocalActionLib__key, 0)
-        call UnitId(("GetTargetObject")) // INLINED!!
+        call LocalActionLib__Call("GetTargetObject")
         return LoadUnitHandle(LocalActionLib__ht, LocalActionLib__key, 0)
     endfunction
     
@@ -799,7 +810,7 @@ endfunction
     function GetTargetItem takes nothing returns item
         call SaveStr(LocalActionLib__ht, LocalActionLib__key, 0, "(V)Hitem;")
         call RemoveSavedHandle(LocalActionLib__ht, LocalActionLib__key, 0)
-        call UnitId(("GetTargetObject")) // INLINED!!
+        call LocalActionLib__Call("GetTargetObject")
         return LoadItemHandle(LocalActionLib__ht, LocalActionLib__key, 0)
     endfunction
     
@@ -807,7 +818,7 @@ endfunction
     function GetTargetDestructable takes nothing returns destructable
         call SaveStr(LocalActionLib__ht, LocalActionLib__key, 0, "(V)Hdestructable;")
         call RemoveSavedHandle(LocalActionLib__ht, LocalActionLib__key, 0)
-        call UnitId(("GetTargetObject")) // INLINED!!
+        call LocalActionLib__Call("GetTargetObject")
         return LoadDestructableHandle(LocalActionLib__ht, LocalActionLib__key, 0)
     endfunction
     
@@ -818,20 +829,20 @@ endfunction
         call SaveInteger(LocalActionLib__ht, LocalActionLib__key, 1, GetHandleId(u))
         call SaveInteger(LocalActionLib__ht, LocalActionLib__key, 2, id)
         call SaveBoolean(LocalActionLib__ht, LocalActionLib__key, 3, show)
-        call UnitId(("SetUnitAbilityButtonShow")) // INLINED!!
+        call LocalActionLib__Call("SetUnitAbilityButtonShow")
     endfunction
     
     //設置 是否顯示FPS  顯示狀態下 調用false 可以隱藏 ，相反可以顯示
     function ShowFpsText takes boolean Open returns nothing
         call SaveStr(LocalActionLib__ht, LocalActionLib__key, 0, "(B)V")
         call SaveBoolean(LocalActionLib__ht, LocalActionLib__key, 1, Open)
-        call UnitId(("ShowFpsText")) // INLINED!!
+        call LocalActionLib__Call("ShowFpsText")
     endfunction
     
     //獲取當前遊戲的 fps值  即 遊戲畫面的幀數
     function GetFps takes nothing returns real
         call SaveStr(LocalActionLib__ht, LocalActionLib__key, 0, "()R")
-        call UnitId(("GetFps")) // INLINED!!
+        call LocalActionLib__Call("GetFps")
         return LoadReal(LocalActionLib__ht, LocalActionLib__key, 0)
     endfunction
     
@@ -839,7 +850,7 @@ endfunction
     //可以通過 d3d庫裡的模擬按鍵 模擬按下ESC 或者enter 來禁止玩家聊天
     function GetChatState takes nothing returns boolean
         call SaveStr(LocalActionLib__ht, LocalActionLib__key, 0, "()B")
-        call UnitId(("GetChatState")) // INLINED!!
+        call LocalActionLib__Call("GetChatState")
         return LoadBoolean(LocalActionLib__ht, LocalActionLib__key, 0)
     endfunction
   
@@ -857,28 +868,28 @@ endfunction
     //獲取鼠標在屏幕的x軸
     function GetMouseVectorX takes nothing returns real
         call SaveStr(d3d__ht, d3d__key, 0, "()R")
-        call UnitId(("GetMouseVectorX")) // INLINED!!
+        call d3d__Call("GetMouseVectorX")
         return LoadReal(d3d__ht, d3d__key, 0)
     endfunction
     
     //獲取鼠標在屏幕的y軸
     function GetMouseVectorY takes nothing returns real
         call SaveStr(d3d__ht, d3d__key, 0, "()R")
-        call UnitId(("GetMouseVectorY")) // INLINED!!
+        call d3d__Call("GetMouseVectorY")
         return LoadReal(d3d__ht, d3d__key, 0)
     endfunction
     
     //獲取魔獸窗口寬
     function GetWindowWidth takes nothing returns integer
         call SaveStr(d3d__ht, d3d__key, 0, "()I")
-        call UnitId(("GetWindowWidth")) // INLINED!!
+        call d3d__Call("GetWindowWidth")
         return LoadInteger(d3d__ht, d3d__key, 0)
     endfunction
     
     //獲取魔獸窗口高
     function GetWindowHeight takes nothing returns integer
         call SaveStr(d3d__ht, d3d__key, 0, "()I")
-        call UnitId(("GetWindowHeight")) // INLINED!!
+        call d3d__Call("GetWindowHeight")
         return LoadInteger(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -886,7 +897,7 @@ endfunction
     function Hex takes integer i returns string
         call SaveStr(d3d__ht, d3d__key, 0, "(I)S")
         call SaveInteger(d3d__ht, d3d__key, 1, i)
-        call UnitId(("Hex")) // INLINED!!
+        call d3d__Call("Hex")
     return LoadStr(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -894,21 +905,21 @@ endfunction
     //創建字體
     function CreateFont takes nothing returns integer
         call SaveStr(d3d__ht, d3d__key, 0, "()I")
-        call UnitId(("CreateFont")) // INLINED!!
+        call d3d__Call("CreateFont")
         return LoadInteger(d3d__ht, d3d__key, 0)
     endfunction
     
     //銷毀字體
     function DestroyFont takes integer font returns nothing
         call SaveStr(d3d__ht, d3d__key, 0, "(I)V")
-        call UnitId(("DestroyFont")) // INLINED!!
+        call d3d__Call("DestroyFont")
     endfunction
     
     //獲取字體寬
     function GetFontWidth takes integer font returns integer
         call SaveStr(d3d__ht, d3d__key, 0, "(I)I")
         call SaveInteger(d3d__ht, d3d__key, 1, font)
-        call UnitId(("GetFontWidth")) // INLINED!!
+        call d3d__Call("GetFontWidth")
         return LoadInteger(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -917,14 +928,14 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(II)V")
         call SaveInteger(d3d__ht, d3d__key, 1, font)
         call SaveInteger(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetFontWidth")) // INLINED!!
+        call d3d__Call("SetFontWidth")
     endfunction
     
     //獲取字體高
     function GetFontHeight takes integer font returns integer
         call SaveStr(d3d__ht, d3d__key, 0, "(I)I")
         call SaveInteger(d3d__ht, d3d__key, 1, font)
-        call UnitId(("GetFontHeight")) // INLINED!!
+        call d3d__Call("GetFontHeight")
         return LoadInteger(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -933,14 +944,14 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(II)V")
         call SaveInteger(d3d__ht, d3d__key, 1, font)
         call SaveInteger(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetFontHeight")) // INLINED!!
+        call d3d__Call("SetFontHeight")
     endfunction
     
     //獲取字體粗細
     function GetFontWeight takes integer font returns integer
         call SaveStr(d3d__ht, d3d__key, 0, "(I)I")
         call SaveInteger(d3d__ht, d3d__key, 1, font)
-        call UnitId(("GetFontWeight")) // INLINED!!
+        call d3d__Call("GetFontWeight")
         return LoadInteger(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -949,7 +960,7 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(II)V")
         call SaveInteger(d3d__ht, d3d__key, 1, font)
         call SaveInteger(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetFontWeight")) // INLINED!!
+        call d3d__Call("SetFontWeight")
     endfunction
     
     //設置字體是否傾斜
@@ -957,14 +968,14 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IB)V")
         call SaveInteger(d3d__ht, d3d__key, 1, font)
         call SaveBoolean(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetFontItalic")) // INLINED!!
+        call d3d__Call("SetFontItalic")
     endfunction
     
     //獲取字體類型
     function GetFontFaceName takes integer font returns string
         call SaveStr(d3d__ht, d3d__key, 0, "(I)S")
         call SaveInteger(d3d__ht, d3d__key, 1, font)
-        call UnitId(("GetFontFaceName")) // INLINED!!
+        call d3d__Call("GetFontFaceName")
         return LoadStr(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -973,7 +984,7 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IS)V")
         call SaveInteger(d3d__ht, d3d__key, 1, font)
         call SaveStr(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetFontFaceName")) // INLINED!!
+        call d3d__Call("SetFontFaceName")
     endfunction
     
     //==============寫字類===========================
@@ -986,7 +997,7 @@ endfunction
         call SaveReal(d3d__ht, d3d__key, 4, y)
         call SaveReal(d3d__ht, d3d__key, 5, time)
         call SaveInteger(d3d__ht, d3d__key, 6, color)
-        call UnitId(("CreateText")) // INLINED!!
+        call d3d__Call("CreateText")
         return LoadInteger(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -994,7 +1005,7 @@ endfunction
     function GetTextString takes integer text returns string
         call SaveStr(d3d__ht, d3d__key, 0, "(I)S")
         call SaveInteger(d3d__ht, d3d__key, 1, text)
-        call UnitId(("GetTextString")) // INLINED!!
+        call d3d__Call("GetTextString")
         return LoadStr(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1003,14 +1014,14 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IS)V")
         call SaveInteger(d3d__ht, d3d__key, 1, text)
         call SaveStr(d3d__ht, d3d__key, 2, str)
-        call UnitId(("SetTextString")) // INLINED!!
+        call d3d__Call("SetTextString")
     endfunction
     
     //獲取文字坐標x軸
     function GetTextX takes integer text returns real
         call SaveStr(d3d__ht, d3d__key, 0, "(I)R")
         call SaveInteger(d3d__ht, d3d__key, 1, text)
-        call UnitId(("GetTextX")) // INLINED!!
+        call d3d__Call("GetTextX")
         return LoadReal(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1019,14 +1030,14 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IR)V")
         call SaveInteger(d3d__ht, d3d__key, 1, text)
         call SaveReal(d3d__ht, d3d__key, 2, x)
-        call UnitId(("SetTextX")) // INLINED!!
+        call d3d__Call("SetTextX")
     endfunction
     
     //獲取文字坐標y軸
     function GetTextY takes integer text returns real
         call SaveStr(d3d__ht, d3d__key, 0, "(I)R")
         call SaveInteger(d3d__ht, d3d__key, 1, text)
-        call UnitId(("GetTextY")) // INLINED!!
+        call d3d__Call("GetTextY")
         return LoadReal(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1035,14 +1046,14 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IR)V")
         call SaveInteger(d3d__ht, d3d__key, 1, text)
         call SaveReal(d3d__ht, d3d__key, 2, y)
-        call UnitId(("SetTextY")) // INLINED!!
+        call d3d__Call("SetTextY")
     endfunction
     
     //獲取文字剩餘存活時間
     function GetTextTime takes integer text returns real
         call SaveStr(d3d__ht, d3d__key, 0, "(I)R")
         call SaveInteger(d3d__ht, d3d__key, 1, text)
-        call UnitId(("GetTextTime")) // INLINED!!
+        call d3d__Call("GetTextTime")
         return LoadReal(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1051,14 +1062,14 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IR)V")
         call SaveInteger(d3d__ht, d3d__key, 1, text)
         call SaveReal(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetTextTime")) // INLINED!!
+        call d3d__Call("SetTextTime")
     endfunction
     
     //獲取文字顏色 16進制 0xFFFFFFFF 前2位表示透明 後6位表示 紅綠藍
     function GetTextColor takes integer text returns integer
         call SaveStr(d3d__ht, d3d__key, 0, "(I)I")
         call SaveInteger(d3d__ht, d3d__key, 1, text)
-        call UnitId(("GetTextColor")) // INLINED!!
+        call d3d__Call("GetTextColor")
         return LoadInteger(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1067,7 +1078,7 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(II)V")
         call SaveInteger(d3d__ht, d3d__key, 1, text)
         call SaveInteger(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetTextColor")) // INLINED!!
+        call d3d__Call("SetTextColor")
     endfunction
     
     //創建屏幕圖像 圖像路徑 相對魔獸窗口x軸 相對魔獸窗口y軸 相對魔獸窗口 寬度 相對魔獸窗口 高度 等級
@@ -1080,7 +1091,7 @@ endfunction
         call SaveReal(d3d__ht, d3d__key, 5, height)
         call SaveInteger(d3d__ht, d3d__key, 6, color)
         call SaveInteger(d3d__ht, d3d__key, 7, level)
-        call UnitId(("CreateTexture")) // INLINED!!
+        call d3d__Call("CreateTexture")
         return LoadInteger(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1088,14 +1099,14 @@ endfunction
     function DestroyTexture takes integer texture returns nothing
         call SaveStr(d3d__ht, d3d__key, 0, "(I)V")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
-        call UnitId(("DestroyTexture")) // INLINED!!
+        call d3d__Call("DestroyTexture")
     endfunction
     
     //獲取圖像相對魔獸窗口坐標x軸
     function GetTextureX takes integer texture returns real
         call SaveStr(d3d__ht, d3d__key, 0, "(I)R")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
-        call UnitId(("GetTextureX")) // INLINED!!
+        call d3d__Call("GetTextureX")
         return LoadReal(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1104,14 +1115,14 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IR)V")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
         call SaveReal(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetTextureX")) // INLINED!!
+        call d3d__Call("SetTextureX")
     endfunction
     
     //獲取圖像相對魔獸窗口坐標y軸
     function GetTextureY takes integer texture returns real
         call SaveStr(d3d__ht, d3d__key, 0, "(I)R")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
-        call UnitId(("GetTextureY")) // INLINED!!
+        call d3d__Call("GetTextureY")
         return LoadReal(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1120,14 +1131,14 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IR)V")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
         call SaveReal(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetTextureY")) // INLINED!!
+        call d3d__Call("SetTextureY")
     endfunction
     
     //獲取圖像相對魔獸窗口 寬度
     function GetTextureWidth takes integer texture returns real
         call SaveStr(d3d__ht, d3d__key, 0, "(I)R")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
-        call UnitId(("GetTextureWidth")) // INLINED!!
+        call d3d__Call("GetTextureWidth")
         return LoadReal(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1136,14 +1147,14 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IR)V")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
         call SaveReal(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetTextureWidth")) // INLINED!!
+        call d3d__Call("SetTextureWidth")
     endfunction
     
     //獲取圖像相對魔獸窗口 高度
     function GetTextureHeight takes integer texture returns real
         call SaveStr(d3d__ht, d3d__key, 0, "(I)R")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
-        call UnitId(("GetTextureHeight")) // INLINED!!
+        call d3d__Call("GetTextureHeight")
         return LoadReal(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1152,14 +1163,14 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IR)V")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
         call SaveReal(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetTextureHeight")) // INLINED!!
+        call d3d__Call("SetTextureHeight")
     endfunction
     
     //獲取圖像顏色
     function GetTextureColor takes integer texture returns integer
         call SaveStr(d3d__ht, d3d__key, 0, "(I)I")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
-        call UnitId(("GetTextureColor")) // INLINED!!
+        call d3d__Call("GetTextureColor")
         return LoadInteger(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1168,14 +1179,14 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(II)V")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
         call SaveInteger(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetTextureColor")) // INLINED!!
+        call d3d__Call("SetTextureColor")
     endfunction
     
     //獲取圖像級別 級別越高 越上層顯示
     function GetTextureLevel takes integer texture returns integer
         call SaveStr(d3d__ht, d3d__key, 0, "(I)I")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
-        call UnitId(("GetTextureLevel")) // INLINED!!
+        call d3d__Call("GetTextureLevel")
         return LoadInteger(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1184,14 +1195,14 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(II)V")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
         call SaveInteger(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetTextureLevel")) // INLINED!!
+        call d3d__Call("SetTextureLevel")
     endfunction
     
     //獲取圖像旋轉角度
     function GetTextureRotation takes integer texture returns real
         call SaveStr(d3d__ht, d3d__key, 0, "(I)R")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
-        call UnitId(("GetTextureRotation")) // INLINED!!
+        call d3d__Call("GetTextureRotation")
         return LoadReal(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1200,14 +1211,14 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IR)V")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
         call SaveReal(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetTextureRotation")) // INLINED!!
+        call d3d__Call("SetTextureRotation")
     endfunction
     
     //獲取圖像像素的 寬
     function GetTexturePixelWidth takes integer texture returns real
         call SaveStr(d3d__ht, d3d__key, 0, "(I)R")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
-        call UnitId(("GetTexturePixelWidth")) // INLINED!!
+        call d3d__Call("GetTexturePixelWidth")
         return LoadReal(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1215,7 +1226,7 @@ endfunction
     function GetTexturePixelHeight takes integer texture returns real
         call SaveStr(d3d__ht, d3d__key, 0, "(I)R")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
-        call UnitId(("GetTexturePixelWidth")) // INLINED!!
+        call d3d__Call("GetTexturePixelWidth")
         return LoadReal(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1224,7 +1235,7 @@ endfunction
     function GetTextureSrcRect takes integer texture returns rect
         call SaveStr(d3d__ht, d3d__key, 0, "(I)Hrect;")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
-        call UnitId(("GetTextureSrcRect")) // INLINED!!
+        call d3d__Call("GetTextureSrcRect")
         return LoadRectHandle(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1237,7 +1248,7 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IHrect;)V")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
         call SaveRectHandle(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetTextureSrcRect")) // INLINED!!
+        call d3d__Call("SetTextureSrcRect")
     endfunction
     
     //更改圖像圖形  參數 圖像句柄 新的圖形路徑
@@ -1245,7 +1256,7 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IS)V")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
         call SaveStr(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetTexture")) // INLINED!!
+        call d3d__Call("SetTexture")
     endfunction
     
     //設置圖像是否顯示 隱藏 true顯示  false隱藏
@@ -1253,7 +1264,7 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IB)V")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
         call SaveBoolean(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetTextureShow")) // INLINED!!
+        call d3d__Call("SetTextureShow")
     endfunction
     
     //設置圖像是否響應事件 默認true 為開啟觸發狀態 false為關閉觸發
@@ -1261,7 +1272,7 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IB)V")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
         call SaveBoolean(d3d__ht, d3d__key, 2, value)
-        call UnitId(("SetTextureTrigger")) // INLINED!!
+        call d3d__Call("SetTextureTrigger")
     endfunction
     
     //開啟圖像的觸發器
@@ -1319,7 +1330,7 @@ endfunction
         call SaveInteger(d3d__ht, d3d__key, 2, order)
         call SaveInteger(d3d__ht, d3d__key, 3, GetFuncAddr(wCallBack))
         call SaveInteger(d3d__ht, d3d__key, 4, GetFuncAddr(lCallBack))
-        call UnitId(("TextureAddEvent")) // INLINED!!
+        call d3d__Call("TextureAddEvent")
         return LoadInteger(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1328,7 +1339,7 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(II)V")
         call SaveInteger(d3d__ht, d3d__key, 1, texture)
         call SaveInteger(d3d__ht, d3d__key, 2, Event)
-        call UnitId(("TextureRemoveEvent")) // INLINED!!
+        call d3d__Call("TextureRemoveEvent")
     endfunction
     
     //設置鍵位狀態 指定鍵位 按下或彈起狀態  true為按下 false為彈起
@@ -1336,7 +1347,7 @@ endfunction
         call SaveStr(d3d__ht, d3d__key, 0, "(IB)V")
         call SaveInteger(d3d__ht, d3d__key, 1, Key)
         call SaveBoolean(d3d__ht, d3d__key, 2, up)
-        call UnitId(("SetKeyboard")) // INLINED!!
+        call d3d__Call("SetKeyboard")
     endfunction
     
     // 模擬按鍵  按下 彈起 模擬1次點擊
@@ -1353,22 +1364,22 @@ endfunction
     
     //獲取響應的鍵位
     function GetTriggerKeyboard takes nothing returns integer
-        return LoadInteger(d3d__ht, (GetHandleId(GetExpiredTimer())), 0x100) // INLINED!!
+        return LoadInteger(d3d__ht, GetEventIndex(), 0x100)
     endfunction
     
     //獲取觸發圖像
     function GetTriggerTexture takes nothing returns integer
-        return LoadInteger(d3d__ht, (GetHandleId(GetExpiredTimer())), 0xff) // INLINED!!
+        return LoadInteger(d3d__ht, GetEventIndex(), 0xff)
     endfunction
     
     //獲取響應事件
     function GetTriggerEvent takes nothing returns integer
-        return LoadInteger(d3d__ht, (GetHandleId(GetExpiredTimer())), 0xfe) // INLINED!!
+        return LoadInteger(d3d__ht, GetEventIndex(), 0xfe)
     endfunction
     
     // 獲取響應的鍵盤操作 按下為true 彈起為false
     function GetTriggerKeyboardAction takes nothing returns boolean
-        if ( LoadInteger(d3d__ht, (GetHandleId(GetExpiredTimer())), 0x101) == 0 ) then // INLINED!!
+        if ( LoadInteger(d3d__ht, GetEventIndex(), 0x101) == 0 ) then
             return false
         endif
         return true
@@ -1379,13 +1390,13 @@ endfunction
     function ShowConsole takes boolean show returns nothing
         call SaveStr(d3d__ht, d3d__key, 0, "(B)V")
         call SaveBoolean(d3d__ht, d3d__key, 1, show)
-        call UnitId(("ShowConsole")) // INLINED!!
+        call d3d__Call("ShowConsole")
     endfunction
     
     //獲取小地圖圖形位置X軸向量
     function GetLittleMapX takes nothing returns real
         call SaveStr(d3d__ht, d3d__key, 0, "()R")
-        call UnitId(("GetLittleMapX")) // INLINED!!
+        call d3d__Call("GetLittleMapX")
         return LoadReal(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1393,13 +1404,13 @@ endfunction
     function SetLittleMapX takes real value returns nothing
         call SaveStr(d3d__ht, d3d__key, 0, "(R)V")
         call SaveReal(d3d__ht, d3d__key, 1, value)
-        call UnitId(("SetLittleMapX")) // INLINED!!
+        call d3d__Call("SetLittleMapX")
     endfunction
     
     //獲取小地圖圖形位置y軸向量
     function GetLittleMapY takes nothing returns real
         call SaveStr(d3d__ht, d3d__key, 0, "()R")
-        call UnitId(("GetLittleMapY")) // INLINED!!
+        call d3d__Call("GetLittleMapY")
         return LoadReal(d3d__ht, d3d__key, 0)
     endfunction
     
@@ -1407,7 +1418,7 @@ endfunction
     function SetLittleMapY takes real value returns nothing
         call SaveStr(d3d__ht, d3d__key, 0, "(R)V")
         call SaveReal(d3d__ht, d3d__key, 1, value)
-        call UnitId(("SetLittleMapY")) // INLINED!!
+        call d3d__Call("SetLittleMapY")
     endfunction
     
     //====================字體結構體的封裝=============================
@@ -1454,7 +1465,7 @@ function s__LOGFONT_deallocate takes integer this returns nothing
     elseif (si__LOGFONT_V[this]!=-1) then
         return
     endif
-    call DestroyFont(s__LOGFONT_font[(this)]) // INLINED!!
+    call s__LOGFONT_onDestroy(this)
     set si__LOGFONT_V[this]=si__LOGFONT_F
     set si__LOGFONT_F=this
 endfunction
@@ -1465,212 +1476,172 @@ endfunction
 
 //library d3d ends
 //===========================================================================
-// 
-// 虛幻之災 v1.0
-// 
-//   Warcraft III map script
-//   Generated by the Warcraft III World Editor
-//   Date: Sun Oct 23 23:03:47 2022
-//   Map Author: Arvin Yang
-// 
+//*
+//*  Global variables
+//*
 //===========================================================================
-//***************************************************************************
-//*
-//*  Global Variables
-//*
-//***************************************************************************
 function InitGlobals takes nothing returns nothing
+ local integer i= 0
 endfunction
-//***************************************************************************
-//*
-//*  Items
-//*
-//***************************************************************************
-function CreateAllItems takes nothing returns nothing
-    local integer itemID
-    call CreateItem('azhr', - 315.1, - 64.7)
-    call CreateItem('ckng', - 394.8, 335.7)
-    call CreateItem('desc', - 153.7, 303.8)
-    call CreateItem('ledg', - 864.6, - 164.1)
-    call CreateItem('modt', - 495.4, - 355.7)
-    call CreateItem('phlt', - 581.7, - 149.2)
-    call CreateItem('ratf', - 528.1, 286.3)
-    call CreateItem('wolg', - 485.1, - 537.3)
-    call CreateItem('wtlg', - 415.4, - 342.8)
+function InitRandomGroups takes nothing returns nothing
+ local integer curset
 endfunction
-//***************************************************************************
-//*
-//*  Unit Creation
-//*
-//***************************************************************************
-//===========================================================================
-function CreateUnitsForPlayer0 takes nothing returns nothing
-    local player p= Player(0)
-    local unit u
-    local integer unitID
-    local trigger t
-    local real life
-    set u=CreateUnit(p, 'Hamg', - 1041.8, - 595.3, 104.180)
-    call SetHeroLevel(u, 10, false)
-    call SelectHeroSkill(u, 'AHbz')
-    call SelectHeroSkill(u, 'AHtc')
-    set u=CreateUnit(p, 'hpea', - 1137.2, - 704.7, 65.720)
-    set life=GetUnitState(u, UNIT_STATE_LIFE)
-    call SetUnitState(u, UNIT_STATE_LIFE, 0.50 * life)
-    set u=CreateUnit(p, 'hpea', - 942.6, - 739.5, 337.983)
-    set u=CreateUnit(p, 'hpea', - 626.5, - 622.6, 253.177)
-    set u=CreateUnit(p, 'hpea', - 612.5, - 703.8, 156.505)
-    set u=CreateUnit(p, 'hpea', - 829.3, - 978.9, 52.275)
-    set u=CreateUnit(p, 'hpea', - 881.0, - 981.8, 52.780)
-    set u=CreateUnit(p, 'hpea', - 796.8, - 619.3, 325.722)
-    set u=CreateUnit(p, 'hpea', - 841.2, - 335.6, 233.357)
-    set u=CreateUnit(p, 'hpea', - 695.9, - 372.0, 159.900)
-    set u=CreateUnit(p, 'hpea', - 463.9, - 596.7, 156.307)
-    set u=CreateUnit(p, 'hpea', - 538.1, - 703.8, 102.506)
-    set u=CreateUnit(p, 'hpea', - 733.8, - 470.0, 164.679)
-    set u=CreateUnit(p, 'hpea', - 562.3, - 294.5, 234.686)
-    set u=CreateUnit(p, 'hpea', - 610.6, - 407.7, 26.698)
-    set u=CreateUnit(p, 'hpea', - 844.6, - 483.5, 53.890)
-    set u=CreateUnit(p, 'hpea', - 798.0, - 403.9, 257.890)
-    set u=CreateUnit(p, 'hpea', - 898.7, - 417.2, 24.841)
-    set u=CreateUnit(p, 'hpea', - 943.1, - 433.7, 291.169)
-    set u=CreateUnit(p, 'hrif', - 1204.0, - 313.7, 217.844)
-    set u=CreateUnit(p, 'hrif', - 1070.5, - 124.0, 126.500)
-    set u=CreateUnit(p, 'hrif', - 963.1, 20.2, 155.022)
-    set u=CreateUnit(p, 'hrif', - 877.9, 119.9, 222.051)
-    set u=CreateUnit(p, 'hrif', - 800.3, 199.2, 309.209)
-    set u=CreateUnit(p, 'hrif', - 718.9, 230.5, 346.245)
-    set u=CreateUnit(p, 'hrif', - 1036.1, - 244.0, 94.606)
-    set u=CreateUnit(p, 'hrif', - 1122.4, - 473.7, 61.789)
-    set u=CreateUnit(p, 'hrif', - 1159.2, - 562.1, 50.769)
-    set u=CreateUnit(p, 'hrif', - 924.2, - 687.5, 263.504)
-    set u=CreateUnit(p, 'hrif', - 855.6, - 731.4, 359.319)
-    set u=CreateUnit(p, 'hrif', - 762.2, - 789.6, 219.393)
-    set u=CreateUnit(p, 'hrif', - 496.3, - 804.9, 27.159)
-    set u=CreateUnit(p, 'hrif', - 307.5, - 621.7, 58.636)
-    set u=CreateUnit(p, 'hrif', - 393.2, - 747.1, 283.236)
-    set u=CreateUnit(p, 'hrif', - 699.3, - 897.1, 64.832)
-    set u=CreateUnit(p, 'hrif', - 771.0, - 897.1, 166.832)
-    set u=CreateUnit(p, 'hrif', - 989.4, - 893.5, 296.354)
-    set u=CreateUnit(p, 'hrif', - 838.3, - 1183.1, 36.278)
-    set u=CreateUnit(p, 'hrif', - 843.6, - 1290.3, 114.404)
-    set u=CreateUnit(p, 'hrif', - 838.6, - 1372.0, 233.379)
-    set u=CreateUnit(p, 'hrif', - 834.0, - 1449.6, 73.633)
-    set u=CreateUnit(p, 'hrif', - 827.5, - 1557.3, 211.493)
-    set u=CreateUnit(p, 'hrif', - 830.3, - 1676.2, 222.029)
-    set u=CreateUnit(p, 'hrif', - 840.1, - 1785.8, 339.631)
-    set u=CreateUnit(p, 'hrif', - 848.9, - 1860.5, 6.856)
-    set u=CreateUnit(p, 'hrif', - 855.2, - 1928.7, 29.807)
-    set u=CreateUnit(p, 'hrif', - 855.2, - 2010.2, 135.180)
-    set u=CreateUnit(p, 'hrif', - 859.9, - 2105.3, 144.354)
-    set u=CreateUnit(p, 'hrif', - 866.8, - 2189.1, 101.275)
-    set u=CreateUnit(p, 'hrif', - 888.8, - 2284.9, 354.309)
-    set u=CreateUnit(p, 'hrif', - 908.6, - 2382.2, 83.114)
-    set u=CreateUnit(p, 'hrif', - 920.7, - 2484.3, 107.065)
-    set u=CreateUnit(p, 'hrif', - 953.2, - 2583.1, 312.560)
-    set u=CreateUnit(p, 'hrif', - 947.2, - 2651.8, 206.308)
-    set u=CreateUnit(p, 'hrif', - 962.8, - 2718.3, 271.360)
-    set u=CreateUnit(p, 'hrif', - 970.2, - 2800.7, 334.797)
-    set u=CreateUnit(p, 'hrif', - 988.6, - 2930.6, 180.917)
-    set u=CreateUnit(p, 'hrif', - 992.2, - 2996.4, 68.392)
-    set u=CreateUnit(p, 'hrif', - 1000.7, - 3087.0, 330.962)
-    set u=CreateUnit(p, 'hrif', - 1000.0, - 3162.3, 42.101)
-    set u=CreateUnit(p, 'hrif', - 964.0, - 2871.0, 219.546)
-    set u=CreateUnit(p, 'Hpal', - 1305.7, - 775.5, 136.454)
+function InitSounds takes nothing returns nothing
 endfunction
-//===========================================================================
-function CreateUnitsForPlayer1 takes nothing returns nothing
-    local player p= Player(1)
-    local unit u
-    local integer unitID
-    local trigger t
-    local real life
-    set u=CreateUnit(p, 'Hblm', - 278.9, - 143.2, 300.800)
-    call SelectHeroSkill(u, 'AHfs')
-    set u=CreateUnit(p, 'hpea', - 719.0, - 20.0, 264.306)
-    set u=CreateUnit(p, 'hpea', - 589.2, 62.4, 301.298)
-    set u=CreateUnit(p, 'hpea', - 466.4, 62.4, 114.591)
-    set u=CreateUnit(p, 'hpea', - 379.7, 9.1, 339.345)
-    set u=CreateUnit(p, 'hpea', - 343.2, - 119.6, 215.075)
-    set u=CreateUnit(p, 'hpea', - 380.0, - 350.6, 5.252)
-    set u=CreateUnit(p, 'hpea', - 414.1, - 492.9, 178.357)
-    set u=CreateUnit(p, 'hpea', - 512.8, - 512.0, 342.982)
-    set u=CreateUnit(p, 'hpea', - 670.4, - 438.7, 63.942)
-    set u=CreateUnit(p, 'hpea', - 777.3, - 350.6, 314.241)
-    set u=CreateUnit(p, 'hpea', - 740.3, - 195.9, 280.742)
-    set u=CreateUnit(p, 'hpea', - 734.3, - 86.1, 1.912)
-    set u=CreateUnit(p, 'hpea', - 677.0, - 32.8, 359.539)
-    set u=CreateUnit(p, 'hrif', - 404.1, 262.2, 202.188)
-    set u=CreateUnit(p, 'hrif', - 238.0, 168.4, 349.398)
-    set u=CreateUnit(p, 'hrif', - 175.1, 107.9, 259.955)
-    set u=CreateUnit(p, 'hrif', - 108.7, 25.9, 227.248)
-    set u=CreateUnit(p, 'hrif', - 60.0, - 80.7, 113.262)
-    set u=CreateUnit(p, 'hrif', - 40.7, - 161.3, 344.047)
-    set u=CreateUnit(p, 'hrif', - 45.6, - 299.0, 55.801)
-    set u=CreateUnit(p, 'hrif', - 82.8, - 357.3, 38.618)
-    set u=CreateUnit(p, 'hrif', - 252.0, - 432.6, 314.636)
-    set u=CreateUnit(p, 'hrif', - 259.1, - 505.1, 178.083)
-    set u=CreateUnit(p, 'hrif', - 243.9, - 592.1, 324.722)
-    set u=CreateUnit(p, 'hrif', - 431.1, - 414.1, 264.614)
-    set u=CreateUnit(p, 'hrif', - 507.4, - 249.0, 89.355)
-    set u=CreateUnit(p, 'hrif', - 504.1, - 145.4, 149.474)
-    set u=CreateUnit(p, 'hrif', - 349.7, - 264.1, 313.032)
-    set u=CreateUnit(p, 'hrif', - 233.9, - 357.3, 98.506)
-    set u=CreateUnit(p, 'hrif', - 75.0, - 727.4, 20.853)
-    set u=CreateUnit(p, 'hrif', - 294.0, - 762.7, 46.704)
-    set u=CreateUnit(p, 'hrif', - 332.6, - 834.9, 255.011)
-    set u=CreateUnit(p, 'hrif', - 296.4, - 918.6, 345.443)
-    set u=CreateUnit(p, 'hrif', - 403.3, - 897.1, 269.745)
-    set u=CreateUnit(p, 'hrif', - 431.2, - 1369.9, 83.630)
-    set u=CreateUnit(p, 'hrif', - 444.9, - 1505.1, 153.143)
-    set u=CreateUnit(p, 'hrif', - 437.6, - 1569.7, 264.405)
-    set u=CreateUnit(p, 'hrif', - 438.5, - 1649.4, 322.393)
-    set u=CreateUnit(p, 'hrif', - 439.5, - 1742.4, 240.608)
-    set u=CreateUnit(p, 'hrif', - 447.8, - 1816.0, 149.990)
-    set u=CreateUnit(p, 'hrif', - 463.3, - 1902.1, 313.054)
-    set u=CreateUnit(p, 'hrif', - 467.3, - 1970.3, 28.796)
-    set u=CreateUnit(p, 'hrif', - 471.2, - 2050.2, 50.209)
-    set u=CreateUnit(p, 'hrif', - 488.8, - 2127.0, 156.923)
-    set u=CreateUnit(p, 'hrif', - 498.9, - 2192.3, 181.906)
-    set u=CreateUnit(p, 'hrif', - 518.7, - 2267.8, 238.773)
-    set u=CreateUnit(p, 'hrif', - 531.1, - 2344.4, 298.442)
-    set u=CreateUnit(p, 'hrif', - 552.4, - 2429.2, 292.355)
-    set u=CreateUnit(p, 'hrif', - 582.0, - 2513.7, 298.936)
-    set u=CreateUnit(p, 'hrif', - 575.5, - 2713.6, 251.913)
-    set u=CreateUnit(p, 'hrif', - 587.5, - 2796.2, 349.804)
-    set u=CreateUnit(p, 'hrif', - 602.3, - 2875.4, 41.354)
-    set u=CreateUnit(p, 'hrif', - 607.0, - 2959.6, 234.994)
-    set u=CreateUnit(p, 'hrif', - 611.3, - 3036.4, 227.336)
-    set u=CreateUnit(p, 'hrif', - 628.2, - 3110.0, 277.886)
-    set u=CreateUnit(p, 'hrif', - 586.9, - 2598.0, 101.352)
-    set u=CreateUnit(p, 'hrif', - 630.7, - 2675.8, 45.067)
+function CreateDestructables takes nothing returns nothing
+ local destructable d
+ local trigger t
+ local real life
 endfunction
-//===========================================================================
-function CreatePlayerBuildings takes nothing returns nothing
+function CreateItems takes nothing returns nothing
+ local integer itemID
+	call CreateItem('phlt', - 581.7, - 149.2)
+	call CreateItem('ratf', - 528.1, 286.3)
+	call CreateItem('ckng', - 394.8, 335.7)
+	call CreateItem('desc', - 153.7, 303.8)
+	call CreateItem('azhr', - 315.1, - 64.7)
+	call CreateItem('modt', - 495.4, - 355.7)
+	call CreateItem('wtlg', - 415.4, - 342.8)
+	call CreateItem('wolg', - 485.1, - 537.3)
+	call CreateItem('ledg', - 864.6, - 164.1)
 endfunction
-//===========================================================================
-function CreatePlayerUnits takes nothing returns nothing
-    call CreateUnitsForPlayer0()
-    call CreateUnitsForPlayer1()
+function CreateUnits takes nothing returns nothing
+ local unit u
+ local integer unitID
+ local trigger t
+ local real life
+	set u=CreateUnit(Player(0), 'Hamg', - 1041.8, - 595.3, 104.2)
+	call SetHeroLevel(u, 10, false)
+	call SelectHeroSkill(u, 'AHbz')
+	call SelectHeroSkill(u, 'AHtc')
+	set u=CreateUnit(Player(1), 'hpea', - 719.0, - 20.0, 264.3)
+	set u=CreateUnit(Player(1), 'hpea', - 589.2, 62.4, 301.3)
+	set u=CreateUnit(Player(1), 'hpea', - 466.4, 62.4, 114.6)
+	set u=CreateUnit(Player(1), 'hpea', - 379.7, 9.1, 339.3)
+	set u=CreateUnit(Player(1), 'hpea', - 343.2, - 119.6, 215.1)
+	set u=CreateUnit(Player(1), 'hpea', - 380.0, - 350.6, 5.3)
+	set u=CreateUnit(Player(1), 'hpea', - 414.1, - 492.9, 178.4)
+	set u=CreateUnit(Player(1), 'hpea', - 512.8, - 512.0, 343.0)
+	set u=CreateUnit(Player(1), 'hpea', - 670.4, - 438.7, 63.9)
+	set u=CreateUnit(Player(1), 'hpea', - 777.3, - 350.6, 314.2)
+	set u=CreateUnit(Player(1), 'hpea', - 740.3, - 195.9, 280.7)
+	set u=CreateUnit(Player(1), 'hpea', - 734.3, - 86.1, 1.9)
+	set u=CreateUnit(Player(1), 'hpea', - 677.0, - 32.8, 359.5)
+	set u=CreateUnit(Player(1), 'Hblm', - 278.9, - 143.2, 300.8)
+	call SelectHeroSkill(u, 'AHfs')
+	set u=CreateUnit(Player(0), 'hpea', - 1137.2, - 704.7, 65.7)
+	set life=GetUnitState(u, UNIT_STATE_LIFE)
+	call SetUnitState(u, UNIT_STATE_LIFE, 0.500000 * life)
+	set u=CreateUnit(Player(0), 'hpea', - 942.6, - 739.5, 338.0)
+	set u=CreateUnit(Player(0), 'hpea', - 626.5, - 622.6, 253.2)
+	set u=CreateUnit(Player(0), 'hpea', - 612.5, - 703.8, 156.5)
+	set u=CreateUnit(Player(0), 'hpea', - 829.3, - 978.9, 52.3)
+	set u=CreateUnit(Player(0), 'hpea', - 881.0, - 981.8, 52.8)
+	set u=CreateUnit(Player(0), 'hpea', - 796.8, - 619.3, 325.7)
+	set u=CreateUnit(Player(0), 'hpea', - 841.2, - 335.6, 233.4)
+	set u=CreateUnit(Player(0), 'hpea', - 695.9, - 372.0, 159.9)
+	set u=CreateUnit(Player(0), 'hpea', - 463.9, - 596.7, 156.3)
+	set u=CreateUnit(Player(0), 'hpea', - 538.1, - 703.8, 102.5)
+	set u=CreateUnit(Player(0), 'hpea', - 733.8, - 470.0, 164.7)
+	set u=CreateUnit(Player(0), 'hpea', - 562.3, - 294.5, 234.7)
+	set u=CreateUnit(Player(0), 'hpea', - 610.6, - 407.7, 26.7)
+	set u=CreateUnit(Player(0), 'hpea', - 844.6, - 483.5, 53.9)
+	set u=CreateUnit(Player(0), 'hpea', - 798.0, - 403.9, 257.9)
+	set u=CreateUnit(Player(0), 'hpea', - 898.7, - 417.2, 24.8)
+	set u=CreateUnit(Player(0), 'hpea', - 943.1, - 433.7, 291.2)
+	set u=CreateUnit(Player(0), 'hrif', - 1204.0, - 313.7, 217.8)
+	set u=CreateUnit(Player(0), 'hrif', - 1070.5, - 124.0, 126.5)
+	set u=CreateUnit(Player(0), 'hrif', - 963.1, 20.2, 155.0)
+	set u=CreateUnit(Player(0), 'hrif', - 877.9, 119.9, 222.1)
+	set u=CreateUnit(Player(0), 'hrif', - 800.3, 199.2, 309.2)
+	set u=CreateUnit(Player(0), 'hrif', - 718.9, 230.5, 346.2)
+	set u=CreateUnit(Player(0), 'hrif', - 1036.1, - 244.0, 94.6)
+	set u=CreateUnit(Player(0), 'hrif', - 1122.4, - 473.7, 61.8)
+	set u=CreateUnit(Player(0), 'hrif', - 1159.2, - 562.1, 50.8)
+	set u=CreateUnit(Player(0), 'hrif', - 924.2, - 687.5, 263.5)
+	set u=CreateUnit(Player(0), 'hrif', - 855.6, - 731.4, 359.3)
+	set u=CreateUnit(Player(0), 'hrif', - 762.2, - 789.6, 219.4)
+	set u=CreateUnit(Player(0), 'hrif', - 496.3, - 804.9, 27.2)
+	set u=CreateUnit(Player(0), 'hrif', - 307.5, - 621.7, 58.6)
+	set u=CreateUnit(Player(0), 'hrif', - 393.2, - 747.1, 283.2)
+	set u=CreateUnit(Player(0), 'hrif', - 699.3, - 897.1, 64.8)
+	set u=CreateUnit(Player(0), 'hrif', - 771.0, - 897.1, 166.8)
+	set u=CreateUnit(Player(0), 'hrif', - 989.4, - 893.5, 296.4)
+	set u=CreateUnit(Player(1), 'hrif', - 404.1, 262.2, 202.2)
+	set u=CreateUnit(Player(1), 'hrif', - 238.0, 168.4, 349.4)
+	set u=CreateUnit(Player(1), 'hrif', - 175.1, 107.9, 260.0)
+	set u=CreateUnit(Player(1), 'hrif', - 108.7, 25.9, 227.2)
+	set u=CreateUnit(Player(1), 'hrif', - 60.0, - 80.7, 113.3)
+	set u=CreateUnit(Player(1), 'hrif', - 40.7, - 161.3, 344.0)
+	set u=CreateUnit(Player(1), 'hrif', - 45.6, - 299.0, 55.8)
+	set u=CreateUnit(Player(1), 'hrif', - 82.8, - 357.3, 38.6)
+	set u=CreateUnit(Player(1), 'hrif', - 252.0, - 432.6, 314.6)
+	set u=CreateUnit(Player(1), 'hrif', - 259.1, - 505.1, 178.1)
+	set u=CreateUnit(Player(1), 'hrif', - 243.9, - 592.1, 324.7)
+	set u=CreateUnit(Player(1), 'hrif', - 431.1, - 414.1, 264.6)
+	set u=CreateUnit(Player(1), 'hrif', - 507.4, - 249.0, 89.4)
+	set u=CreateUnit(Player(1), 'hrif', - 504.1, - 145.4, 149.5)
+	set u=CreateUnit(Player(1), 'hrif', - 349.7, - 264.1, 313.0)
+	set u=CreateUnit(Player(1), 'hrif', - 233.9, - 357.3, 98.5)
+	set u=CreateUnit(Player(1), 'hrif', - 75.0, - 727.4, 20.9)
+	set u=CreateUnit(Player(1), 'hrif', - 294.0, - 762.7, 46.7)
+	set u=CreateUnit(Player(1), 'hrif', - 332.6, - 834.9, 255.0)
+	set u=CreateUnit(Player(1), 'hrif', - 296.4, - 918.6, 345.4)
+	set u=CreateUnit(Player(1), 'hrif', - 403.3, - 897.1, 269.7)
+	set u=CreateUnit(Player(0), 'hrif', - 838.3, - 1183.1, 36.3)
+	set u=CreateUnit(Player(0), 'hrif', - 843.6, - 1290.3, 114.4)
+	set u=CreateUnit(Player(0), 'hrif', - 838.6, - 1372.0, 233.4)
+	set u=CreateUnit(Player(0), 'hrif', - 834.0, - 1449.6, 73.6)
+	set u=CreateUnit(Player(0), 'hrif', - 827.5, - 1557.3, 211.5)
+	set u=CreateUnit(Player(0), 'hrif', - 830.3, - 1676.2, 222.0)
+	set u=CreateUnit(Player(0), 'hrif', - 840.1, - 1785.8, 339.6)
+	set u=CreateUnit(Player(0), 'hrif', - 848.9, - 1860.5, 6.9)
+	set u=CreateUnit(Player(0), 'hrif', - 855.2, - 1928.7, 29.8)
+	set u=CreateUnit(Player(0), 'hrif', - 855.2, - 2010.2, 135.2)
+	set u=CreateUnit(Player(0), 'hrif', - 859.9, - 2105.3, 144.4)
+	set u=CreateUnit(Player(0), 'hrif', - 866.8, - 2189.1, 101.3)
+	set u=CreateUnit(Player(0), 'hrif', - 888.8, - 2284.9, 354.3)
+	set u=CreateUnit(Player(0), 'hrif', - 908.6, - 2382.2, 83.1)
+	set u=CreateUnit(Player(0), 'hrif', - 920.7, - 2484.3, 107.1)
+	set u=CreateUnit(Player(1), 'hrif', - 431.2, - 1369.9, 83.6)
+	set u=CreateUnit(Player(1), 'hrif', - 444.9, - 1505.1, 153.1)
+	set u=CreateUnit(Player(1), 'hrif', - 437.6, - 1569.7, 264.4)
+	set u=CreateUnit(Player(1), 'hrif', - 438.5, - 1649.4, 322.4)
+	set u=CreateUnit(Player(1), 'hrif', - 439.5, - 1742.4, 240.6)
+	set u=CreateUnit(Player(1), 'hrif', - 447.8, - 1816.0, 150.0)
+	set u=CreateUnit(Player(1), 'hrif', - 463.3, - 1902.1, 313.1)
+	set u=CreateUnit(Player(1), 'hrif', - 467.3, - 1970.3, 28.8)
+	set u=CreateUnit(Player(1), 'hrif', - 471.2, - 2050.2, 50.2)
+	set u=CreateUnit(Player(1), 'hrif', - 488.8, - 2127.0, 156.9)
+	set u=CreateUnit(Player(1), 'hrif', - 498.9, - 2192.3, 181.9)
+	set u=CreateUnit(Player(1), 'hrif', - 518.7, - 2267.8, 238.8)
+	set u=CreateUnit(Player(1), 'hrif', - 531.1, - 2344.4, 298.4)
+	set u=CreateUnit(Player(1), 'hrif', - 552.4, - 2429.2, 292.4)
+	set u=CreateUnit(Player(1), 'hrif', - 582.0, - 2513.7, 298.9)
+	set u=CreateUnit(Player(1), 'hrif', - 575.5, - 2713.6, 251.9)
+	set u=CreateUnit(Player(1), 'hrif', - 587.5, - 2796.2, 349.8)
+	set u=CreateUnit(Player(1), 'hrif', - 602.3, - 2875.4, 41.4)
+	set u=CreateUnit(Player(1), 'hrif', - 607.0, - 2959.6, 235.0)
+	set u=CreateUnit(Player(1), 'hrif', - 611.3, - 3036.4, 227.3)
+	set u=CreateUnit(Player(1), 'hrif', - 628.2, - 3110.0, 277.9)
+	set u=CreateUnit(Player(1), 'hrif', - 586.9, - 2598.0, 101.4)
+	set u=CreateUnit(Player(1), 'hrif', - 630.7, - 2675.8, 45.1)
+	set u=CreateUnit(Player(0), 'hrif', - 953.2, - 2583.1, 312.6)
+	set u=CreateUnit(Player(0), 'hrif', - 947.2, - 2651.8, 206.3)
+	set u=CreateUnit(Player(0), 'hrif', - 962.8, - 2718.3, 271.4)
+	set u=CreateUnit(Player(0), 'hrif', - 970.2, - 2800.7, 334.8)
+	set u=CreateUnit(Player(0), 'hrif', - 988.6, - 2930.6, 180.9)
+	set u=CreateUnit(Player(0), 'hrif', - 992.2, - 2996.4, 68.4)
+	set u=CreateUnit(Player(0), 'hrif', - 1000.7, - 3087.0, 331.0)
+	set u=CreateUnit(Player(0), 'hrif', - 1000.0, - 3162.3, 42.1)
+	set u=CreateUnit(Player(0), 'hrif', - 964.0, - 2871.0, 219.5)
+	set u=CreateUnit(Player(0), 'Hpal', - 1305.7, - 775.5, 136.5)
 endfunction
-//===========================================================================
-function CreateAllUnits takes nothing returns nothing
-    call CreatePlayerBuildings()
-    call CreatePlayerUnits()
+function CreateRegions takes nothing returns nothing
+ local weathereffect we
 endfunction
-//***************************************************************************
-//*
-//*  Custom Script Code
-//*
-//***************************************************************************
-//***************************************************************************
-//*
-//*  Triggers
-//*
-//***************************************************************************
-//===========================================================================
-// Trigger: japi-constant-lib
-//===========================================================================
+function CreateCameras takes nothing returns nothing
+endfunction
 //TESH.scrollpos=20
 //TESH.alwaysfold=0
 
@@ -1785,20 +1756,12 @@ endfunction
     ///<summary>裝甲類型</summary>
     
     
-//===========================================================================
-// Trigger: japi
-//===========================================================================
 //TESH.scrollpos=258
 //TESH.alwaysfold=0
 
 
-//===========================================================================
-// Trigger: d3d
-//===========================================================================
 //TESH.scrollpos=582
 //TESH.alwaysfold=0
-// Trigger: async-japi
-//===========================================================================
 //TESH.scrollpos=73
 //TESH.alwaysfold=0
 
@@ -1810,86 +1773,81 @@ endfunction
 //使用方法 本地坐標命令(命令id,坐標x軸,坐標y軸,FLAG_INSTANT + FLAG_ONLY) flag標籤為   瞬發+獨立
 //===========================================================================
 function InitCustomTriggers takes nothing returns nothing
-    //Function not found: call InitTrig_japi_constant_lib()
-    //Function not found: call InitTrig_japi()
-    //Function not found: call InitTrig_d3d()
-    //Function not found: call InitTrig_async_japi()
 endfunction
-//***************************************************************************
-//*
-//*  Players
-//*
-//***************************************************************************
+//===========================================================================
+function RunInitializationTriggers takes nothing returns nothing
+endfunction
 function InitCustomPlayerSlots takes nothing returns nothing
-    // Player 0
-    call SetPlayerStartLocation(Player(0), 0)
-    call SetPlayerColor(Player(0), ConvertPlayerColor(0))
-    call SetPlayerRacePreference(Player(0), RACE_PREF_HUMAN)
-    call SetPlayerRaceSelectable(Player(0), true)
-    call SetPlayerController(Player(0), MAP_CONTROL_USER)
-    // Player 1
-    call SetPlayerStartLocation(Player(1), 1)
-    call SetPlayerColor(Player(1), ConvertPlayerColor(1))
-    call SetPlayerRacePreference(Player(1), RACE_PREF_ORC)
-    call SetPlayerRaceSelectable(Player(1), true)
-    call SetPlayerController(Player(1), MAP_CONTROL_USER)
+	call SetPlayerStartLocation(Player(0), 0)
+	call SetPlayerColor(Player(0), ConvertPlayerColor(0))
+	call SetPlayerRacePreference(Player(0), RACE_PREF_HUMAN)
+	call SetPlayerRaceSelectable(Player(0), false)
+	call SetPlayerController(Player(0), MAP_CONTROL_USER)
+	call SetPlayerStartLocation(Player(1), 1)
+	call SetPlayerColor(Player(1), ConvertPlayerColor(1))
+	call SetPlayerRacePreference(Player(1), RACE_PREF_ORC)
+	call SetPlayerRaceSelectable(Player(1), false)
+	call SetPlayerController(Player(1), MAP_CONTROL_USER)
 endfunction
 function InitCustomTeams takes nothing returns nothing
-    // Force: TRIGSTR_003
-    call SetPlayerTeam(Player(0), 0)
-    call SetPlayerTeam(Player(1), 0)
+	// Force: TRIGSTR_008
+	call SetPlayerTeam(Player(0), 0)
+	call SetPlayerTeam(Player(1), 0)
 endfunction
 function InitAllyPriorities takes nothing returns nothing
-    call SetStartLocPrioCount(0, 1)
-    call SetStartLocPrio(0, 0, 1, MAP_LOC_PRIO_HIGH)
-    call SetStartLocPrioCount(1, 1)
-    call SetStartLocPrio(1, 0, 0, MAP_LOC_PRIO_HIGH)
+	call SetStartLocPrioCount(0, 1)
+	call SetStartLocPrio(0, 0, 1, MAP_LOC_PRIO_HIGH)
+	call SetStartLocPrioCount(1, 1)
+	call SetStartLocPrio(1, 0, 0, MAP_LOC_PRIO_HIGH)
 endfunction
-//***************************************************************************
+//===========================================================================
 //*
 //*  Main Initialization
 //*
-//***************************************************************************
 //===========================================================================
 function main takes nothing returns nothing
-    call JapiConstantLib_init()
+	call JapiConstantLib_init()
  call initializePlugin()
- call SetCameraBounds(- 3328.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), - 3584.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 3328.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 3072.0 - GetCameraMargin(CAMERA_MARGIN_TOP), - 3328.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 3072.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 3328.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), - 3584.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
-    call SetDayNightModels("Environment\\DNC\\DNCLordaeron\\DNCLordaeronTerrain\\DNCLordaeronTerrain.mdl", "Environment\\DNC\\DNCLordaeron\\DNCLordaeronUnit\\DNCLordaeronUnit.mdl")
-    call SetTerrainFogEx(0, 3000.0, 5000.0, 0.500, 0.000, 0.000, 0.000)
-    call NewSoundEnvironment("Default")
-    call SetAmbientDaySound("LordaeronSummerDay")
-    call SetAmbientNightSound("LordaeronSummerNight")
-    call SetMapMusic("Music", true, 0)
-    call CreateAllItems()
-    call CreateAllUnits()
-    call InitBlizzard()
+ call SetCameraBounds(- 3328.000000 + GetCameraMargin(CAMERA_MARGIN_LEFT), - 3584.000000 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 3328.000000 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 3072.000000 - GetCameraMargin(CAMERA_MARGIN_TOP), - 3328.000000 + GetCameraMargin(CAMERA_MARGIN_LEFT), 3072.000000 - GetCameraMargin(CAMERA_MARGIN_TOP), 3328.000000 - GetCameraMargin(CAMERA_MARGIN_RIGHT), - 3584.000000 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
+	call SetDayNightModels("Environment\\DNC\\DNCLordaeron\\DNCLordaeronTerrain\\DNCLordaeronTerrain.mdl", "Environment\\DNC\\DNCLordaeron\\DNCLordaeronUnit\\DNCLordaeronUnit.mdl")
+	call SetTerrainFogEx(0, 3000.00, 5000.00, 0.500, 0.000, 0.000, 0.000)
+	call NewSoundEnvironment("Default")
+	call SetAmbientDaySound("LordaeronSummerDay")
+	call SetAmbientNightSound("LordaeronSummerNight")
+	call SetMapMusic("Music", true, 0)
+	call InitSounds()
+	call InitRandomGroups()
+	call CreateRegions()
+	call CreateCameras()
+	call CreateDestructables()
+	call CreateItems()
+	call CreateUnits()
+	call InitBlizzard()
 
-call ExecuteFunc("jasshelper__initstructs553376437")
-call ExecuteFunc("Base___init")
+call ExecuteFunc("jasshelper__initstructs119505265")
+call ExecuteFunc("Base__init")
+call ExecuteFunc("YDTriggerSaveLoadSystem__Init")
 
-    call InitGlobals()
-    call InitCustomTriggers()
+	call InitGlobals()
+	call InitCustomTriggers()
+	call RunInitializationTriggers()
 endfunction
-//***************************************************************************
+//===========================================================================
 //*
 //*  Map Configuration
 //*
-//***************************************************************************
+//===========================================================================
 function config takes nothing returns nothing
-    call SetMapName("虛幻之災 v1.0")
-    call SetMapDescription("這裡是一度豐饒廣袤的雷姆利亞大陸，直到「虛妄之災」的降臨，才變得如此殘破不堪。\n你決定踏入這片絕望的土地了嗎？！")
-    call SetPlayers(2)
-    call SetTeams(2)
-    call SetGamePlacement(MAP_PLACEMENT_TEAMS_TOGETHER)
-    call DefineStartLocation(0, 2752.0, - 3008.0)
-    call DefineStartLocation(1, 2112.0, - 2240.0)
-    // Player setup
-    call InitCustomPlayerSlots()
-    call SetPlayerSlotAvailable(Player(0), MAP_CONTROL_USER)
-    call SetPlayerSlotAvailable(Player(1), MAP_CONTROL_USER)
-    call InitGenericPlayerSlots()
-    call InitAllyPriorities()
+	call SetMapName("無盡之塔 v1.0")
+	call SetMapDescription("")
+	call SetPlayers(2)
+	call SetTeams(2)
+	call SetGamePlacement(MAP_PLACEMENT_TEAMS_TOGETHER)
+	call DefineStartLocation(0, 2752.000000, - 3008.000000)
+	call DefineStartLocation(1, 2112.000000, - 2240.000000)
+	call InitCustomPlayerSlots()
+	call InitCustomTeams()
+	call InitAllyPriorities()
 endfunction
 
 
@@ -1902,7 +1860,7 @@ local integer this=f__arg_this
    return true
 endfunction
 
-function jasshelper__initstructs553376437 takes nothing returns nothing
+function jasshelper__initstructs119505265 takes nothing returns nothing
     set st__LOGFONT_onDestroy=CreateTrigger()
     call TriggerAddCondition(st__LOGFONT_onDestroy,Condition( function sa__LOGFONT_onDestroy))
 

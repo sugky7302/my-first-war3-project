@@ -23,7 +23,7 @@
 .
 ├─CHANGELOG.md
 ├─README.md
-├─UnrealDisaster.w3x：obj 格式的地圖檔
+├─infinite-tower.w3x：obj 格式的地圖檔
 ├─.w3x：lni 格式的地圖檔
 ├─doc：文件
 ├─map：地圖的原始碼
@@ -42,12 +42,12 @@
 ```sh
 git clone https://github.com/sugky7302/Unreal-Disaster.git
 ```
-接著使用任何魔獸地圖編輯器打開專案目錄裡的 `UnrealDisaster.w3x` 即可。
+接著使用任何魔獸地圖編輯器打開專案目錄裡的 `infinite-tower.w3x` 即可。
 
 ## 開發
 1. 資料夾名稱和地圖名稱一定要一樣，不然 w3x2lni 會無法打包。
 2. 由於 w3x2lni 再打包後會自動將 `scripts/` 裡的檔案匯入到地圖裡。因此，當撰寫完程式之後，記得要先**打包再執行**。
 
 ## FAQ
-1. 出現 `The term 'chcp 65001 && E:\projects\UnrealDisaster/tools/w3x2lni/bin/w3x2lni-lua.exe' is not recognized` 的問題。
+1. 出現 `The term 'chcp 65001 && E:\projects\infinite-tower/tools/w3x2lni/bin/w3x2lni-lua.exe' is not recognized` 的問題。
 >必須使用 cmd.exe 執行。
