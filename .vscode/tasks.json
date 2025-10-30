@@ -1,6 +1,14 @@
 {
     "version": "2.0.0",
     "type": "shell",
+    "inputs": [
+        {
+            "id": "map",
+            "type": "promptString",
+            "description": "請輸入地圖名稱",
+            "default": "map"
+        }
+    ],
     "tasks": [
         {
             "label": "執行",
@@ -8,25 +16,27 @@
             "command": "${workspaceFolder}\\.vscode\\run.bat",
             "args": [
                 "${workspaceRoot}",
-                "infinite-tower"
+                "${input:map}"
             ],
             "dependsOrder": "sequence",
-            "dependsOn": ["打包"]
+            "dependsOn": [
+                "打包"
+            ]
         },
         {
             "label": "配置",
-            "command": "cmd",
+            "command": "chcp 65001 && \"${workspaceRoot}/tools/w3x2lni/bin/w3x2lni-lua.exe\"",
             "args": [
-                "/c",
-                "chcp 65001 && \"${workspaceRoot}\\tools\\w3x2lni\\bin\\w3x2lni-lua.exe\" \".\\tools\\配置.lua\" \"${workspaceRoot}\""
+                ".\\tools\\配置.lua",
+                "${workspaceRoot}"
             ]
         },
         {
             "label": "語法檢查",
-            "command": "cmd",
+            "command": "chcp 65001 && \"${workspaceRoot}/tools/w3x2lni/bin/w3x2lni-lua.exe\"",
             "args": [
-                "/c",
-                "chcp 65001 && \"${workspaceRoot}/tools/w3x2lni/bin/w3x2lni-lua.exe\" \".\\tools\\語法檢查.lua\" \"${workspaceRoot}\""
+                ".\\tools\\語法檢查.lua",
+                "${workspaceRoot}"
             ],
             "problemMatcher": {
                 "owner": "lua",
@@ -54,7 +64,7 @@
             "args": [
                 "${workspaceRoot}",
                 "obj",
-                "infinite-tower"
+                "${input:map}"
             ]
         },
         {
@@ -69,12 +79,12 @@
             "args": [
                 "${workspaceRoot}",
                 "lni",
-                "infinite-tower"
+                "${input:map}",
             ]
         },
         {
             "label": "發佈(Slk)",
-            "command": "${workspaceFolder}\\.vscode\\w3x2lni.bat",
+            "command": "chcp 65001 && \"${workspaceRoot}/tools/w3x2lni/w2l.exe\"",
             "presentation": {
                 "echo": false,
                 "reveal": "always",
@@ -82,17 +92,18 @@
                 "panel": "new"
             },
             "args": [
-                "${workspaceRoot}",
                 "slk",
-                "infinite-tower"
+                "${workspaceRoot}",
+                "${workspaceRoot}/${input:map}.w3x"
             ]
         },
         {
-            "label": "🔍",
-            "command": "cmd",
+            "label": "語法監控",
+            "command": "chcp 65001 && \"${workspaceRoot}/tools/w3x2lni/bin/w3x2lni-lua.exe\" -e \"package.cpath=package.cpath..';'..[[${workspaceRoot}/tools/?.dll]]\"",
             "args": [
-                "/c",
-                "chcp 65001 && \"${workspaceRoot}/tools/w3x2lni/bin/w3x2lni-lua.exe\" -e \"package.cpath=package.cpath..';'..[[${workspaceRoot}\\tools\\?.dll]]\" \"${workspaceRoot}\\tools\\語法檢查.lua\" \"${workspaceRoot}\" --watch"
+                ".\\tools\\語法檢查.lua",
+                "${workspaceRoot}",
+                "--watch"
             ],
             "isBackground": true,
             "problemMatcher": {

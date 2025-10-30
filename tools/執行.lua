@@ -19,8 +19,8 @@ local function get_debugger()
 end
 
 local root = fs.path(arg[1])
-if not fs.exists(root / 'infinite-tower.w3x') then
-    print('地圖不存在', root / 'infinite-tower.w3x')
+if not fs.exists(root / 'map.w3x') then
+    print('地圖不存在', root / 'map.w3x')
     return
 end
 if get_debugger() then
@@ -29,5 +29,5 @@ end
 subprocess.spawn {
     ydwe / 'ydwe.exe',
     '-war3',
-    '-loadfile', root / 'infinite-tower.w3x',
+    '-loadfile', root / 'map.w3x',
 }

@@ -10,7 +10,7 @@ set command=%~2
 echo "當前操作為 %command%，地圖名稱為 %mapName%"
 if "%command%"=="obj" (
     echo "開始打包 %~1 資料夾為 %~3.w3x"
-    %w3x2lniPath% %command% %~1
+    %w3x2lniPath% %command% %mapName%
 ) else if "%command%"=="lni" (
     echo "開始解包 %~3.w3x 為資料夾"
     %w3x2lniPath% %command% %mapName% %~1
