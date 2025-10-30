@@ -1,12 +1,18 @@
 globals
-//globals from Base:
-constant boolean LIBRARY_Base=true
-//endglobals from Base
+//globals from Japi:
+constant boolean LIBRARY_Japi=true
+//endglobals from Japi
+//globals from MyTimer:
+constant boolean LIBRARY_MyTimer=true
+//endglobals from MyTimer
 //globals from YDTriggerSaveLoadSystem:
 constant boolean LIBRARY_YDTriggerSaveLoadSystem=true
 hashtable YDHT
 hashtable YDLOC
 //endglobals from YDTriggerSaveLoadSystem
+//globals from Base:
+constant boolean LIBRARY_Base=true
+//endglobals from Base
 
 trigger l__library_init
 
@@ -15,12 +21,18 @@ trigger l__library_init
 endglobals
 
 
-//library Base:
-    function Base__init takes nothing returns nothing
-        call AbilityId("exec-lua: main")
+//library Japi:
+    function Japi__init takes nothing returns nothing
+        call DisplayTextToPlayer(Player(0), 0, 0, "Japi初始化完成，正在執行主程式...")
     endfunction
 
-//library Base ends
+//library Japi ends
+//library MyTimer:
+    function MyTimer__init takes nothing returns nothing
+        call DisplayTextToPlayer(Player(0), 0, 0, "MyTimer初始化完成，正在執行主程式...")
+    endfunction
+
+//library MyTimer ends
 //library YDTriggerSaveLoadSystem:
     function YDTriggerSaveLoadSystem__Init takes nothing returns nothing
             set YDHT=InitHashtable()
@@ -28,6 +40,12 @@ endglobals
     endfunction
 
 //library YDTriggerSaveLoadSystem ends
+//library Base:
+    function Base__init takes nothing returns nothing
+        call DisplayTextToPlayer(Player(0), 0, 0, "初始化完成，正在執行主程式...")
+    endfunction
+
+//library Base ends
 //===========================================================================
 //*
 //*  Global variables
@@ -111,8 +129,10 @@ function main takes nothing returns nothing
 	call CreateUnits()
 	call InitBlizzard()
 
-call ExecuteFunc("Base__init")
+call ExecuteFunc("Japi__init")
+call ExecuteFunc("MyTimer__init")
 call ExecuteFunc("YDTriggerSaveLoadSystem__Init")
+call ExecuteFunc("Base__init")
 
 	call InitGlobals()
 	call InitCustomTriggers()

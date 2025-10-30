@@ -1,4 +1,13 @@
 {
-    "Lua.diagnostics.globals": ["ac", "fs", "base", "war3"],
-    "terminal.integrated.defaultProfile.windows": "Command Prompt"
+    "Lua.diagnostics.globals": [
+        "ac",
+        "fs",
+        "base",
+        "war3"
+    ],
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "jass.formatting.enabled": true,
+    "jass.completion.enabled": true,
+    "jass.diagnostics.enabled": true,
+    "jass.outline.enabled": true
 }

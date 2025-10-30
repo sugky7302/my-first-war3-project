@@ -11,7 +11,7 @@ set mapPath=%mapDir%\%mapName%
 set command=%~2
 echo "當前操作為 %command%"
 if "%command%"=="obj" (
-    echo "開始打包 %mapName% 資料夾為 %mapDir%"
+    echo "開始打包 .w3x 為 %mapName%"
     %w3x2lniPath% obj %mapDir%\.w3x %mapPath%
 ) else if "%command%"=="lni" (
     echo "開始解包 %mapName% 為資料夾"

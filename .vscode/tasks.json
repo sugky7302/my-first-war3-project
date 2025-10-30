@@ -18,10 +18,6 @@
                 "${workspaceRoot}",
                 "${input:map}"
             ],
-            "dependsOrder": "sequence",
-            "dependsOn": [
-                "打包"
-            ]
         },
         {
             "label": "配置",
@@ -55,12 +51,6 @@
             "label": "打包",
             "type": "shell",
             "command": "${workspaceFolder}\\.vscode\\w3x2lni.bat",
-            "presentation": {
-                "echo": false,
-                "reveal": "always",
-                "focus": true,
-                "panel": "new"
-            },
             "args": [
                 "${workspaceRoot}",
                 "obj",
@@ -70,12 +60,6 @@
         {
             "label": "解包",
             "command": "${workspaceFolder}\\.vscode\\w3x2lni.bat",
-            "presentation": {
-                "echo": false,
-                "reveal": "always",
-                "focus": true,
-                "panel": "new"
-            },
             "args": [
                 "${workspaceRoot}",
                 "lni",
