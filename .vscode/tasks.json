@@ -29,23 +29,12 @@
         },
         {
             "label": "語法檢查",
-            "command": "chcp 65001 && \"${workspaceRoot}/tools/w3x2lni/bin/w3x2lni-lua.exe\"",
+            "command": "chcp 65001 && \"${workspaceRoot}\\tools\\jasshelper\\jasshelper.exe\"",
             "args": [
-                ".\\tools\\語法檢查.lua",
-                "${workspaceRoot}"
+                "${workspaceRoot}\\tools\\jasshelper\\jass\\common.j",
+                "${workspaceRoot}\\tools\\jasshelper\\jass\\blizzard.j",
+                "${workspaceRoot}/${input:map}.w3x"
             ],
-            "problemMatcher": {
-                "owner": "lua",
-                "fileLocation": [
-                    "absolute"
-                ],
-                "pattern": {
-                    "regexp": "^(.*):(\\d+):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "message": 3
-                }
-            }
         },
         {
             "label": "打包",
@@ -55,7 +44,8 @@
                 "${workspaceRoot}",
                 "obj",
                 "${input:map}"
-            ]
+            ],
+            "dependsOn": ["語法檢查"]
         },
         {
             "label": "解包",
@@ -80,33 +70,6 @@
                 "${workspaceRoot}",
                 "${workspaceRoot}/${input:map}.w3x"
             ]
-        },
-        {
-            "label": "語法監控",
-            "command": "chcp 65001 && \"${workspaceRoot}/tools/w3x2lni/bin/w3x2lni-lua.exe\" -e \"package.cpath=package.cpath..';'..[[${workspaceRoot}/tools/?.dll]]\"",
-            "args": [
-                ".\\tools\\語法檢查.lua",
-                "${workspaceRoot}",
-                "--watch"
-            ],
-            "isBackground": true,
-            "problemMatcher": {
-                "owner": "lua",
-                "fileLocation": [
-                    "absolute"
-                ],
-                "pattern": {
-                    "regexp": "^(.*):(\\d+):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "message": 3
-                },
-                "background": {
-                    "activeOnStart": true,
-                    "beginsPattern": "\\[Watch\\] File change detected\\.",
-                    "endsPattern": "\\[Watch\\] Complete\\."
-                }
-            }
         }
     ]
 }

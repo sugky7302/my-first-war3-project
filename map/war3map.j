@@ -21,18 +21,6 @@ trigger l__library_init
 endglobals
 
 
-//library Japi:
-    function Japi__init takes nothing returns nothing
-        call DisplayTextToPlayer(Player(0), 0, 0, "Japi初始化完成，正在執行主程式...")
-    endfunction
-
-//library Japi ends
-//library MyTimer:
-    function MyTimer__init takes nothing returns nothing
-        call DisplayTextToPlayer(Player(0), 0, 0, "MyTimer初始化完成，正在執行主程式...")
-    endfunction
-
-//library MyTimer ends
 //library YDTriggerSaveLoadSystem:
     function YDTriggerSaveLoadSystem__Init takes nothing returns nothing
             set YDHT=InitHashtable()

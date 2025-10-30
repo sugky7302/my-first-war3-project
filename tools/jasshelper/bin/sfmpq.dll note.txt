@@ -1,0 +1,8 @@
+The provided SFmpq is a wrapper for the StormLib
+which has higher compatibility than SFmpq
+
+SFmpq wrapper (JassHelper exclusive)
+https://github.com/actboy168/YDWE/tree/master/OpenSource/SFmpq
+
+StormLib
+https://github.com/ladislav-zezula/StormLib

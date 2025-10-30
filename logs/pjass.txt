@@ -1,0 +1,4 @@
+Parse successful:     2418 lines: C:\Users\user\Documents\project\my\infinite-tower\tools\jasshelper\jass\common.j
+Parse successful:    10230 lines: C:\Users\user\Documents\project\my\infinite-tower\tools\jasshelper\jass\blizzard.j
+Parse successful:      215 lines: logs\currentmapscript.j
+Parse successful:    12863 lines: <total>

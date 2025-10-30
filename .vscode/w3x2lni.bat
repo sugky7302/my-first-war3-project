@@ -3,7 +3,7 @@
 chcp 65001
 
 ::填写路径设置
-set w3x2lniPath=%~1\tools\w3x2lni\w2l.exe
+set w3x2lniPath=%~1\tools\w3x2lni_enUS_v2.7.2\w2l.exe
 echo "當前 w3x2lni 路徑為 %w3x2lniPath%"
 set mapDir=%~1
 set mapName=%~3.w3x

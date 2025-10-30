@@ -1,6 +1,10 @@
-输入路径：C:/Users/user/Documents/project/my/infinite-tower
-输出路径：C:/Users/user/Documents/project/my/infinite-tower/map.w3x
-输入格式：Lni
+输入路径：C:/Users/user/Documents/project/my/infinite-tower/map.w3x
+输出路径：C:/Users/user/Documents/project/my/infinite-tower/map_obj.w3x
+输入格式：Mpq
 输出模式：obj
-结果：0 个错误，0 条警告
-用时：0.490 秒
+结果：0 个错误，1 条警告
+用时：0.244 秒
+==========================
+警告 (1)
+==========================
+魔法书 'Aspb' [魔法书] 会被合并 - 基础命令ID 'spellbook' 不存在
