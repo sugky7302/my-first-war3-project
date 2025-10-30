@@ -16,9 +16,7 @@ ENV = {
     -- 開發模式：debug、release
     MODE = "debug",
     -- 版本號
-    VERSION = "0.2.0",
-    -- 記錄所有 lua 的版本號。當啟動 hotfix 時，會將此表中的版本號與磁盤上的版本號進行比對，如果不一致則會重新加載
-    VERSION_RECORDS = require "scripts.file_version",
+    VERSION = require "scripts.version",
     -- 顯示錯誤訊息
     error = function(msg)
         print("---------------------------------------")
