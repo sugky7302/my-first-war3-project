@@ -14,9 +14,9 @@ runtime.sleep = false
 --* 不設定成 local 是因為要讓所有程式都可以訪問
 ENV = {
     -- 開發模式：debug、release
-    MODE = "debug",
+    MODE = require "scripts.config".mode,
     -- 版本號
-    VERSION = require "scripts.version",
+    VERSION = require "scripts.config".version,
     -- 顯示錯誤訊息
     error = function(msg)
         print("---------------------------------------")
@@ -57,12 +57,8 @@ function Import(path)
     local concat, pcall = table.concat, pcall
     local path = {'scripts.', path}
 
-    -- 先試著讀取文件，如果讀取失敗則在後面追加 __init__
+    -- 讀取文件
     local success, result = pcall(require, concat(path))
-    if not success then
-        path[#path + 1] = '.__init__'
-        success, result = pcall(require, concat(path))
-    end
 
     print(path, success, result)
     return result
@@ -70,9 +66,9 @@ end
 
 -- 入口函數
 local function main()
-    Debug(table.concat({"---Start Console---\nLua version: ", runtime.version, "\nMap version: ", ENV.VERSION, "\nMode: ", ENV.MODE, "\n-------------------"}))
-    Import("test.wenhao_texture")
+    Debug(table.concat({"---控制台（", ENV.MODE, "）---\nLua 版本: ", runtime.version, "\nMap 版本: ", ENV.VERSION, "\n---------------------"}))
     Import("shared.timer")
-    Import("shared.behavior-tree.composite")
+    -- Import("shared.behavior-tree.composite")
 end
+
 main()

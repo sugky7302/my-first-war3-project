@@ -11,3 +11,4 @@ set mapName=%~1\%~2.w3x
 
 echo "使用 YDWE 啟動 %mapName%"
 %ydwePath%\ydwe.exe -war3 -loadfile "%mapName%"
+
